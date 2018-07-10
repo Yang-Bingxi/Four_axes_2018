@@ -40,6 +40,7 @@ main.obj: ../Timer/Timer.h
 main.obj: F:/ProjectFile/ccs/Four_axes_2018/9.6'OLED/oled.h
 main.obj: F:/ProjectFile/ccs/Four_axes_2018/9.6'OLED/bmp.h
 main.obj: ../Beep/Beep.h
+main.obj: ../Control/Control.h
 
 ../main.c: 
 D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/stdint.h: 
@@ -81,3 +82,4 @@ F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h:
 F:/ProjectFile/ccs/Four_axes_2018/9.6'OLED/oled.h: 
 F:/ProjectFile/ccs/Four_axes_2018/9.6'OLED/bmp.h: 
 ../Beep/Beep.h: 
+../Control/Control.h: 

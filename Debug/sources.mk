@@ -114,6 +114,7 @@ SUBDIRS := \
 . \
 9.6'OLED \
 Beep \
+Control \
 Pwm \
 Timer \
 colorful_LED \

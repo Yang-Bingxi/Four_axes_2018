@@ -14,6 +14,7 @@ ORDERED_OBJS += \
 "./tm4c123gh6pm_startup_ccs.obj" \
 "./9.6'OLED/OLED.obj" \
 "./Beep/Beep.obj" \
+"./Control/Control.obj" \
 "./Pwm/pwm.obj" \
 "./Timer/Timer.obj" \
 "./colorful_LED/colorful_LED.obj" \
@@ -36,6 +37,7 @@ RMDIR := RMDIR /S/Q
 -include subdir_vars.mk
 -include 9.6'OLED/subdir_vars.mk
 -include Beep/subdir_vars.mk
+-include Control/subdir_vars.mk
 -include Pwm/subdir_vars.mk
 -include Timer/subdir_vars.mk
 -include colorful_LED/subdir_vars.mk
@@ -45,6 +47,7 @@ RMDIR := RMDIR /S/Q
 -include subdir_rules.mk
 -include 9.6'OLED/subdir_rules.mk
 -include Beep/subdir_rules.mk
+-include Control/subdir_rules.mk
 -include Pwm/subdir_rules.mk
 -include Timer/subdir_rules.mk
 -include colorful_LED/subdir_rules.mk
@@ -181,8 +184,8 @@ Four_axes_2018.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "9.6'OLED\OLED.obj" "Beep\Beep.obj" "Pwm\pwm.obj" "Timer\Timer.obj" "colorful_LED\colorful_LED.obj" "delay\delay.obj" "key\key.obj" "uart\uart_echo.obj" "uart\uartstdio.obj" 
-	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "9.6'OLED\OLED.d" "Beep\Beep.d" "Pwm\pwm.d" "Timer\Timer.d" "colorful_LED\colorful_LED.d" "delay\delay.d" "key\key.d" "uart\uart_echo.d" "uart\uartstdio.d" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "9.6'OLED\OLED.obj" "Beep\Beep.obj" "Control\Control.obj" "Pwm\pwm.obj" "Timer\Timer.obj" "colorful_LED\colorful_LED.obj" "delay\delay.obj" "key\key.obj" "uart\uart_echo.obj" "uart\uartstdio.obj" 
+	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "9.6'OLED\OLED.d" "Beep\Beep.d" "Control\Control.d" "Pwm\pwm.d" "Timer\Timer.d" "colorful_LED\colorful_LED.d" "delay\delay.d" "key\key.d" "uart\uart_echo.d" "uart\uartstdio.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
