@@ -60,3 +60,18 @@ void LED_Color(uint8_t r,uint8_t g,uint8_t b)
     PWMPulseWidthSet(PWM1_BASE, PWM_OUT_7, b*100);
 }
 
+void LED_Config(void)
+{
+        SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+        GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 0);
+}
+//void LED_Set(uint8 color)
+//{
+//    if(color==0)
+//    {
+//        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, GPIO_PIN_1);
+//        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2, 0);
+//        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3, 0);
+//    }
+//}

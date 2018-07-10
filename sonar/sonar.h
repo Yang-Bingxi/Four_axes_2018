@@ -7,8 +7,6 @@
 
 extern uint8_t temperature;
 
-#define T  temperature       //在这里填温度O(∩_∩)O
-#define SoundVelocity  (331*sqrt(1+T/273))
 
 extern volatile bool DataIsReady;
 

@@ -1,6 +1,5 @@
 #include "sonar.h"
 double fPeriod=0;
-uint8_t temperature=25;//默认室温
 
 volatile bool DataIsReady  = false;
 
@@ -37,8 +36,6 @@ void Int_Handler_GPIOA(void)
        uint32_t ui32IntStatus;
        static uint32_t ui32Time[2] = {0};
        static uint8_t u8Coun=0;
-
-
         ui32IntStatus = GPIOIntStatus(GPIO_PORTA_BASE, true);
         GPIOIntClear(GPIO_PORTA_BASE, ui32IntStatus);//清除中断标志位
         if((ui32IntStatus & GPIO_PIN_7)  == GPIO_PIN_7)
@@ -48,6 +45,7 @@ void Int_Handler_GPIOA(void)
             //
             ui32Time[u8Coun++]= TimerValueGet(TIMER0_BASE, TIMER_A);
             GPIOIntTypeSet(GPIO_PORTA_BASE, GPIO_PIN_7, GPIO_FALLING_EDGE);
+
             if(u8Coun >1)  //进行两次中断，中间的差值就是计数值
             {
                 u8Coun = 0;
@@ -70,8 +68,7 @@ double GetAverageDistance()
         SonarTrig();
         if(DataIsReady == true)
         {
-        dis[i] = SoundVelocity * fPeriod *12.5*0.000000001*1000;
-           // dis[i] = fPeriod *0.0021875;
+        dis[i] = fPeriod * 0.002125;
         }
      }
     ShellSort(dis, 5);
@@ -99,10 +96,10 @@ void Sonar_GPIOA_Interrupt(void)
        /****初始化外部中断并且设置外部中断为上升沿触发方式********/
        GPIOIntEnable(GPIO_PORTA_BASE, GPIO_PIN_7);                     //打开外部中断
        GPIOIntTypeSet(GPIO_PORTA_BASE, GPIO_PIN_7, GPIO_RISING_EDGE);//上升沿触发
-       GPIOIntRegister(GPIO_PORTA_BASE, Int_Handler_GPIOA);//动态注册，挺方便的
+       GPIOIntRegister(GPIO_PORTA_BASE, Int_Handler_GPIOA);
        IntEnable(INT_GPIOA);
       // IntPrioritySet(INT_GPIOA, 0);                                   //中断优先级
-       //GPIOIntDisable(GPIO_PORTA_BASE, GPIO_PIN_7);  ///什么什么？什么鬼？
+       //GPIOIntDisable(GPIO_PORTA_BASE, GPIO_PIN_7);
        IntMasterEnable();
 
 }

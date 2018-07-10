@@ -4,10 +4,11 @@
 #include "head.h"
 
 //void MotorContolTimer(void);
+void Timer0_Config(void);
+void Timer1_Config(void);
 
-void Timer0IntHandler(void);
-void Timer1IntHandler(void);
-
+uint32_t MyFrequence;
+uint8_t KeyPress0;
 
 
 #endif

@@ -32,41 +32,37 @@ uint32_t Beep_Fre = 40;
   *   By Sw Young
   *   2018.03.29
   */
-//void MotorContolTimer(void)
-//{
-//    //
-//       // Enable the peripherals used by this example.
-//       //
-//        SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
-//        SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER1);
-//       //
-//       // Enable processor interrupts.
-//       //
-//        IntMasterEnable();
-//
-//       //
-//       // Configure the two 32-bit periodic timers.
-//       //
-//        TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC);
-//        TimerConfigure(TIMER1_BASE, TIMER_CFG_PERIODIC);
-//
-//        TimerLoadSet(TIMER0_BASE, TIMER_A,  SysCtlClockGet()/20000-1);  //20KHz
-//        TimerLoadSet(TIMER1_BASE, TIMER_A,  SysCtlClockGet() ); //5HZ
-//
-//       //
-//       // Setup the interrupts for the timer timeouts.
-//       //
-//        IntEnable(INT_TIMER0A);
-//        IntEnable(INT_TIMER1A);
-//
-//        TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
-//        TimerIntEnable(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
-//       //
-//       // Enable the timers.
-//       //
-//        TimerEnable(TIMER0_BASE, TIMER_A);
-//        TimerEnable(TIMER1_BASE, TIMER_A);
-//}
+void Timer0_Config(void)
+{
+       //
+       // Enable the peripherals used by this example.
+       //
+        SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
+       //
+       // Enable processor interrupts.
+       //
+       //不分频
+       //设置为向上计数模式
+        TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC_UP);
+       //
+       //把计数值装满
+       TimerLoadSet(TIMER0_BASE, TIMER_A,0xFFFFFFFF);//2
+       //
+       //***************************中断使能*******************************************
+       //默认不中断
+       //使能TIME0B在基数结束时中断
+       //TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
+       //使能TIMER0B中断
+       //IntEnable(INT_TIMER0A);
+       IntDisable(INT_TIMER0A);//2
+       //动态注册
+       //TimerIntRegister(ui32Base, ui32Timer, pfnHandler)
+       //使能TIMER0B,开始计数
+       //TimerEnable(TIMER0_BASE, TIMER_B);
+       TimerEnable(TIMER0_BASE, TIMER_A);//2
+       //使能处理器中断
+       IntMasterEnable();
+}
 /**
   * 函 数 名:Timer0IntHandler.c
   * 函数功能: 电机定时器中断
@@ -78,48 +74,43 @@ uint32_t Beep_Fre = 40;
   */
 void Timer0IntHandler(void)
 {
-    //清除标志位
-    TimerIntClear(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
+    uint32_t ui32IntStatus;
+    ui32IntStatus = TimerIntStatus(TIMER0_BASE, true);
+    TimerIntClear(TIMER0_BASE, ui32IntStatus);//清除中断标志位
+    if((GPIOPinRead(GPIO_PORTF_BASE,GPIO_PIN_0) & GPIO_PIN_0)  != GPIO_PIN_0)
+    {
+    KeyPress0=(1+KeyPress0)%2;
+    }
 
-    IntMasterDisable();
-//    if(Flag_Stop==0)
-//    {
-//        if(Beep_Flag)
-//          {
-//              Beep_Counter++;
-//              if(Beep_Counter<Beep_Fre)
-//                  GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, GPIO_PIN_6);
-//              if(Beep_Counter>Beep_Fre&&Beep_Counter<2*Beep_Fre)
-//              {
-//                  GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, 0);
-//              }
-//              if(Beep_Counter>2*Beep_Fre)
-//                  Beep_Counter = 0;
-//          }
-//          Time_Flag++;
-//          if(Time_Flag>1)
-//              Time_Flag = 0;
-//          if(Time_Flag>0)
-//          {
-//              Counter++;
-//              if(Counter>65535)
-//                  Counter=0;
-//              GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5, 0);//执行脉冲来控制转速
-//              GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_6, 0);//执行脉冲来控制转速
-//             // GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
-//
-//          }
-//          else
-//          {
-//              GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5, GPIO_PIN_5);//执行脉冲来控制转速
-//              GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_6, GPIO_PIN_6);//执行脉冲来控制转速
-//
-//              //GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, GPIO_PIN_1);
-//
-//          }
-//    }
-    IntMasterEnable();
+}
+void Timer1_Config(void)
+{
+       //
+       // Enable the peripherals used by this example.
+       //
+        SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER1);
+       //
+       // Enable processor interrupts.
+       //
+        IntMasterEnable();
 
+       //
+       // Configure the two 32-bit periodic timers.
+       //
+        TimerConfigure(TIMER1_BASE, TIMER_CFG_PERIODIC);
+
+        TimerLoadSet(TIMER1_BASE, TIMER_A,  SysCtlClockGet() ); //5HZ
+
+       //
+       // Setup the interrupts for the timer timeouts.
+       //
+        IntEnable(INT_TIMER1A);
+
+        TimerIntEnable(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
+       //
+       // Enable the timers.
+       //
+        TimerEnable(TIMER1_BASE, TIMER_A);
 }
 /**
   * 函 数 名:Timer1IntHandler.c
@@ -132,14 +123,14 @@ void Timer0IntHandler(void)
   */
 void Timer1IntHandler(void)
 {
-    //
-    // Clear the timer interrupt.
-    //
-    TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
-
-    //
-    // Update the interrupt status on the display.
-    //
+//    //
+//    // Clear the timer interrupt.
+//    //
+//    TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
+//
+//    //
+//    // Update the interrupt status on the display.
+//    //
 //    if(MotorOrderDirection==0||MotorOrderDirection==1)
 //    {
 //        UARTprintf("Dis%d",(Counter*20)/6400);
