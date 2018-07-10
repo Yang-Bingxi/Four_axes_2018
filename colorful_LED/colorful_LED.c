@@ -66,12 +66,48 @@ void LED_Config(void)
         GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3);
         GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 0);
 }
-//void LED_Set(uint8 color)
-//{
-//    if(color==0)
-//    {
-//        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, GPIO_PIN_1);
-//        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2, 0);
-//        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3, 0);
-//    }
-//}
+void LED_Set(uint8_t color)
+{
+    if(color==0)//ºì
+    {
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, GPIO_PIN_1);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2, 0);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3, 0);
+    }
+    if(color==1)//À¶
+    {
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2, GPIO_PIN_2);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3, 0);
+    }
+    if(color==2)//ÂÌ
+    {
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2, 0);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3, GPIO_PIN_3);
+    }
+    if(color==3)//Æ·ºì
+    {
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, GPIO_PIN_1);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2, GPIO_PIN_2);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3, 0);
+    }
+    if(color==4)//»Æ
+    {
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, GPIO_PIN_1);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2, 0);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3, GPIO_PIN_3);
+    }
+    if(color==5)//Ç³À¶
+    {
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2, GPIO_PIN_2);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3, GPIO_PIN_3);
+    }
+    if(color==6)//°×
+    {
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, GPIO_PIN_1);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2, GPIO_PIN_2);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3, GPIO_PIN_3);
+    }
+}

@@ -1,7 +1,7 @@
 /*******************************************
 开发坏境:CCSv7.0
 开发板:TIVA C Launchpad(TM4C123GH6PM)
-程序功能:16位定时器，单次定时模式和周期性定时模式
+程序功能:四轴飞行器主控
 程序说明:
 编程者: Young sw
 ********************************************/
@@ -63,11 +63,12 @@ void HardwareConfig(void)
 
     PwmConfig();            //初始化PWM
 
-    LED_ColorInit();    //LED初始化
-    LED_Color(160, 0, 2);
+    LED_Config();    //LED初始化
+    LED_Set(BLUE);
 
     OLED_Init();            //初始化OLED
     OLED_Clear();
+    Delay_ms(5);            //延时等待OLED初始化
     OLED_DrawBMP(0,0,128,8,BMP3);
 
     Sonar_Configure();
@@ -83,14 +84,16 @@ int main(void)
 {
     SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN); //主频设置80M
     HardwareConfig();
-    LED_Color(255,0,0);
+    LED_Set(RED);
     UnlockPixhawk();
-
+    LED_Set(GREEN);
+    uint8_t t=0;
     while(1)
     {
-        //UARTprintf("Hello");
+        //UARTprintf("Hello");//调试用
         Disetence = GetAverageDistance();
         UARTprintf("Distance: %d\n",Disetence);
         Delay_ms(1000);
+        t++;
     }
 }
