@@ -58,7 +58,7 @@ double LimitingFilter(double Array[],uint8_t Num)
     for(i = 0;Array[Num/2]-Array[i]>Diff;i++)
     for(j = Num-1;Array[j]-Array[Num/2]>Diff;j--);
 
-    for(k=i;k<=8;k++)
+    for(k=i;k<=j;k++)
     {
         Avg += Array[k];
     }
