@@ -20,6 +20,7 @@ ORDERED_OBJS += \
 "./colorful_LED/colorful_LED.obj" \
 "./delay/delay.obj" \
 "./key/key.obj" \
+"./sonar/sonar.obj" \
 "./uart/uart_echo.obj" \
 "./uart/uartstdio.obj" \
 "D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/ccs/Debug/driverlib.lib" \
@@ -43,6 +44,7 @@ RMDIR := RMDIR /S/Q
 -include colorful_LED/subdir_vars.mk
 -include delay/subdir_vars.mk
 -include key/subdir_vars.mk
+-include sonar/subdir_vars.mk
 -include uart/subdir_vars.mk
 -include subdir_rules.mk
 -include 9.6'OLED/subdir_rules.mk
@@ -53,6 +55,7 @@ RMDIR := RMDIR /S/Q
 -include colorful_LED/subdir_rules.mk
 -include delay/subdir_rules.mk
 -include key/subdir_rules.mk
+-include sonar/subdir_rules.mk
 -include uart/subdir_rules.mk
 -include objects.mk
 
@@ -184,8 +187,8 @@ Four_axes_2018.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "9.6'OLED\OLED.obj" "Beep\Beep.obj" "Control\Control.obj" "Pwm\pwm.obj" "Timer\Timer.obj" "colorful_LED\colorful_LED.obj" "delay\delay.obj" "key\key.obj" "uart\uart_echo.obj" "uart\uartstdio.obj" 
-	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "9.6'OLED\OLED.d" "Beep\Beep.d" "Control\Control.d" "Pwm\pwm.d" "Timer\Timer.d" "colorful_LED\colorful_LED.d" "delay\delay.d" "key\key.d" "uart\uart_echo.d" "uart\uartstdio.d" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "9.6'OLED\OLED.obj" "Beep\Beep.obj" "Control\Control.obj" "Pwm\pwm.obj" "Timer\Timer.obj" "colorful_LED\colorful_LED.obj" "delay\delay.obj" "key\key.obj" "sonar\sonar.obj" "uart\uart_echo.obj" "uart\uartstdio.obj" 
+	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "9.6'OLED\OLED.d" "Beep\Beep.d" "Control\Control.d" "Pwm\pwm.d" "Timer\Timer.d" "colorful_LED\colorful_LED.d" "delay\delay.d" "key\key.d" "sonar\sonar.d" "uart\uart_echo.d" "uart\uartstdio.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

@@ -120,5 +120,6 @@ Timer \
 colorful_LED \
 delay \
 key \
+sonar \
 uart \
 

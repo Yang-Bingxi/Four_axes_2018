@@ -30,7 +30,6 @@ Pwm/pwm.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/adc.h
 Pwm/pwm.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/pwm.h
 Pwm/pwm.obj: D:/ti/TivaWare_C_Series-2.1.4.178/grlib/grlib.h
 Pwm/pwm.obj: D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h
-Pwm/pwm.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/uart.h
 Pwm/pwm.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h
 Pwm/pwm.obj: F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h
 Pwm/pwm.obj: F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h
@@ -65,7 +64,6 @@ D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/adc.h:
 D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/pwm.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/grlib/grlib.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h: 
-D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/uart.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h: 
 F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h: 
 F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h: 

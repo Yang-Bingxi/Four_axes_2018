@@ -30,7 +30,6 @@ Beep/Beep.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/adc.h
 Beep/Beep.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/pwm.h
 Beep/Beep.obj: D:/ti/TivaWare_C_Series-2.1.4.178/grlib/grlib.h
 Beep/Beep.obj: D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h
-Beep/Beep.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/uart.h
 Beep/Beep.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h
 Beep/Beep.obj: F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h
 Beep/Beep.obj: F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h
@@ -65,7 +64,6 @@ D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/adc.h:
 D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/pwm.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/grlib/grlib.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h: 
-D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/uart.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h: 
 F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h: 
 F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h: 

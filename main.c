@@ -26,6 +26,7 @@
 **/
 #include <stdint.h>
 #include <stdbool.h>
+#include "stdio.h"
 
 #include "inc/hw_types.h"
 #include "inc/hw_memmap.h"
@@ -44,26 +45,48 @@
 #include "oled.h"
 #include "bmp.h"
 #include "delay/delay.h"
+#include "utils/uartstdio.h"
+#include "driverlib/uart.h"
 #include "uart/uart.h"
+#include "uart/uartstdio.h"
 #include "Beep/Beep.h"
 #include "9.6'OLED/OLED.h"
 #include "head.h"
 #include "Control/Control.h"
+#include "sonar.h"
+
+
 void HardwareConfig(void)
 {
+    Uart0Iint();        //串口1初始化
+    UARTprintf("Hello");
+
+    Uart1Iint();        //串口2初始化
+
     PwmConfig();            //初始化PWM
+
     OLED_Init();            //初始化OLED
     OLED_Clear();
     OLED_DrawBMP(0,0,128,8,BMP3);
 
+    Sonar_Configure();
+    Sonar_GPIOA_Configure();
+    Sonar_GPIOA_Interrupt();
+
 }
+
+uint16_t Disetence ;
 int main(void)
 {
     SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN); //主频设置80M
     HardwareConfig();
     UnlockPixhawk();
+
     while(1)
     {
-
+       // Disetence = GetAverageDistance();
+//        UART0Send("Distance: %d",Disetence,10);
+        UARTprintf("Hello");
+        Delay_ms(1000);
     }
 }

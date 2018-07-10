@@ -16,14 +16,12 @@
 **/
 #include "timer.h"
 
-extern uint8_t MotorOrderDirection;        //前：0  后：1  左：2  右： 3
-extern uint8_t MotorOrderDisplacement;     //前后表示距离，左右表示转向角
+
 char Time_Flag = 0;
 uint32_t Counter = 0;
 uint8_t Beep_Flag = 0;
 uint32_t Beep_Counter = 0;
 uint32_t Beep_Fre = 40;
-extern uint8_t Flag_Stop;
 
 /**
   * 函 数 名:MotorContolTimer.c
@@ -84,42 +82,42 @@ void Timer0IntHandler(void)
     TimerIntClear(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
 
     IntMasterDisable();
-    if(Flag_Stop==0)
-    {
-        if(Beep_Flag)
-          {
-              Beep_Counter++;
-              if(Beep_Counter<Beep_Fre)
-                  GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, GPIO_PIN_6);
-              if(Beep_Counter>Beep_Fre&&Beep_Counter<2*Beep_Fre)
-              {
-                  GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, 0);
-              }
-              if(Beep_Counter>2*Beep_Fre)
-                  Beep_Counter = 0;
-          }
-          Time_Flag++;
-          if(Time_Flag>1)
-              Time_Flag = 0;
-          if(Time_Flag>0)
-          {
-              Counter++;
-              if(Counter>65535)
-                  Counter=0;
-              GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5, 0);//执行脉冲来控制转速
-              GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_6, 0);//执行脉冲来控制转速
-             // GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
-
-          }
-          else
-          {
-              GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5, GPIO_PIN_5);//执行脉冲来控制转速
-              GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_6, GPIO_PIN_6);//执行脉冲来控制转速
-
-              //GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, GPIO_PIN_1);
-
-          }
-    }
+//    if(Flag_Stop==0)
+//    {
+//        if(Beep_Flag)
+//          {
+//              Beep_Counter++;
+//              if(Beep_Counter<Beep_Fre)
+//                  GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, GPIO_PIN_6);
+//              if(Beep_Counter>Beep_Fre&&Beep_Counter<2*Beep_Fre)
+//              {
+//                  GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, 0);
+//              }
+//              if(Beep_Counter>2*Beep_Fre)
+//                  Beep_Counter = 0;
+//          }
+//          Time_Flag++;
+//          if(Time_Flag>1)
+//              Time_Flag = 0;
+//          if(Time_Flag>0)
+//          {
+//              Counter++;
+//              if(Counter>65535)
+//                  Counter=0;
+//              GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5, 0);//执行脉冲来控制转速
+//              GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_6, 0);//执行脉冲来控制转速
+//             // GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
+//
+//          }
+//          else
+//          {
+//              GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5, GPIO_PIN_5);//执行脉冲来控制转速
+//              GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_6, GPIO_PIN_6);//执行脉冲来控制转速
+//
+//              //GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, GPIO_PIN_1);
+//
+//          }
+//    }
     IntMasterEnable();
 
 }
@@ -142,12 +140,12 @@ void Timer1IntHandler(void)
     //
     // Update the interrupt status on the display.
     //
-    if(MotorOrderDirection==0||MotorOrderDirection==1)
-    {
-        UARTprintf("Dis%d",(Counter*20)/6400);
-    }
-    else if (MotorOrderDirection==2||MotorOrderDirection==3)
-    {
-        UARTprintf("Ang%d",(int)(Counter/89.3));
-    }
+//    if(MotorOrderDirection==0||MotorOrderDirection==1)
+//    {
+//        UARTprintf("Dis%d",(Counter*20)/6400);
+//    }
+//    else if (MotorOrderDirection==2||MotorOrderDirection==3)
+//    {
+//        UARTprintf("Ang%d",(int)(Counter/89.3));
+//    }
 }

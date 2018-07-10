@@ -160,41 +160,78 @@ UART0Send(uint8_t *pui8Buffer, uint32_t ui32Count)
 //*****************************************************************************
 void Uart0Iint(void)
 {
-    //
-     // Enable the peripherals used by this example.
-     //
-     SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
-     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+//    //
+//     // Enable the peripherals used by this example.
+//     //
+//     SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
+//     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+//
+//     //
+//     // Enable processor interrupts.
+//     //
+//     IntMasterEnable();
+//
+//     //
+//     // Set GPIO A0 and A1 as UART pins.
+//     //
+//     GPIOPinConfigure(GPIO_PA0_U0RX);
+//     GPIOPinConfigure(GPIO_PA1_U0TX);
+//     GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+//
+//     //
+//     // Configure the UART for 115,200, 8-N-1 operation.
+//     //
+//     UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 115200,
+//                             (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
+//                              UART_CONFIG_PAR_NONE));
+//
+//     //
+//     // Enable the UART interrupt.
+//     //
+//     IntEnable(INT_UART0);
+//     UARTIntEnable(UART0_BASE, UART_INT_RX | UART_INT_RT);
+//
+//     //
+//     // Prompt for text to be entered.
+//     //
+//     UART0Send((uint8_t *)"\n UART0 Is OK!!\n\n ", 17);
 
-     //
-     // Enable processor interrupts.
-     //
-     IntMasterEnable();
 
-     //
-     // Set GPIO A0 and A1 as UART pins.
-     //
-     GPIOPinConfigure(GPIO_PA0_U0RX);
-     GPIOPinConfigure(GPIO_PA1_U0TX);
-     GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+/*
+ * 另一种配置
+ */
+    // Enable GPIOC
+       SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+       while(!(SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOA)));
+       //
+       // Enable UART0
+       //
+       SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
+       while(!(SysCtlPeripheralReady(SYSCTL_PERIPH_UART0)));
 
-     //
-     // Configure the UART for 115,200, 8-N-1 operation.
-     //
-     UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 115200,
-                             (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
-                              UART_CONFIG_PAR_NONE));
 
-     //
-     // Enable the UART interrupt.
-     //
-     IntEnable(INT_UART0);
-     UARTIntEnable(UART0_BASE, UART_INT_RX | UART_INT_RT);
+       //
+       // Configure GPIO Pins for UART mode.
+       //
+        // Set GPIO A0 and A1 as UART pins.
+        //
+        GPIOPinConfigure(GPIO_PA0_U0RX);
+        GPIOPinConfigure(GPIO_PA1_U0TX);
+        GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
 
-     //
-     // Prompt for text to be entered.
-     //
-     UART0Send((uint8_t *)"\n UART0 Is OK!!\n\n ", 17);
+       //
+       // Use the internal 16MHz oscillator as the UART clock source.
+       //
+       UARTClockSourceSet(UART0_BASE, UART_CLOCK_PIOSC);
+
+       //
+       // Initialize the UART for console I/O.
+       //
+       UARTStdioConfig(0, 115200, 16000000);
+
+       UARTprintf("UART0 Is Ok!\n");
+
+
 }
 
 
@@ -204,16 +241,7 @@ void Uart0Iint(void)
 //UART1
 uint8_t ReciveData_UART1[16];
 uint8_t ReciveData_i_UART1 = 0;
-uint8_t MotorOrderDirection = 5;        //前：0  后：1  左：2  右： 3
-uint8_t MotorOrderDisplacement = 0;     //前后表示距离，左右表示转向角
-extern uint32_t Counter,CountBan;                 //Counter最大值65535，计数一圈6400故，有效计数为10圈，即200cm
-extern uint8_t FlagSend;
-extern uint8_t Beep_Flag;
-extern uint32_t Beep_Counter;
-extern uint32_t Beep_Fre;
-extern float parameter_Ang;
-extern float parameter_Dis;
-extern uint8_t Flag_Stop;
+
 //*****************************************************************************
 //
 // The UART interrupt handler.
@@ -267,87 +295,87 @@ UART1IntHandler(void)
  //   UARTSend()
     UART1Send("Received: ",10);
     UART1Send(ReciveData_UART1, ReciveData_i_UART1);
-    if(ReciveData_UART1[0]=='F')
-    {
-        Counter = 0; //计数清零
-        TimerEnable(TIMER0_BASE, TIMER_A);
-        FlagSend = 1;
-        MotorOrderDirection = 0;//前：0  后：1  左：2  右： 3
-
-        Beep_Flag = 1;
-        Beep_Counter = 0;
-        Beep_Fre = 50;
-
-    }
-    else if (ReciveData_UART1[0]=='B')
-    {
-        Counter = 0; //计数清零
-        TimerEnable(TIMER0_BASE, TIMER_A);
-        FlagSend = 1;
-        MotorOrderDirection = 1;//前：0  后：1  左：2  右： 3
-
-        Beep_Flag = 1;
-        Beep_Counter = 0;
-        Beep_Fre = 33;
-
-    }
-    else if (ReciveData_UART1[0]=='L')
-    {
-        Counter = 0; //计数清零
-        TimerEnable(TIMER0_BASE, TIMER_A);
-        FlagSend =1;
-        MotorOrderDirection = 2;//前：0  后：1  左：2  右： 3
-
-        Beep_Flag = 1;
-        Beep_Counter = 0;
-        Beep_Fre = 20;
-
-    }
-    else if (ReciveData_UART1[0]=='R')
-    {
-        Counter = 0; //计数清零
-        TimerEnable(TIMER0_BASE, TIMER_A);
-        FlagSend = 1;
-        MotorOrderDirection = 3;//前：0  后：1  左：2  右： 3
-
-        Beep_Flag = 1;
-        Beep_Counter = 0;
-        Beep_Fre = 40;
-
-    }
-    else if (ReciveData_UART1[0]=='S'&&ReciveData_UART1[1]=='T'&&ReciveData_UART1[2]=='O'&&ReciveData_UART1[3]=='P')
-    {
-        Flag_Stop = 1;
-        FlagSend = 0;
-    }
-    else if (ReciveData_UART1[0]=='S'&&ReciveData_UART1[1]=='T'&&ReciveData_UART1[2]=='A'&&ReciveData_UART1[3]=='R')
-    {
-        Flag_Stop = 0;
-        FlagSend = 1;
-    }
-//参数校准
-    else if (ReciveData_UART1[0]=='A'&&ReciveData_UART1[1]=='1')
-    {
-        parameter_Ang=parameter_Ang + 0.05;
-        UARTprintf("parameter_Ang=%d",(int)(parameter_Ang*10));
-    }
-    else if (ReciveData_UART1[0]=='P'&&ReciveData_UART1[1]=='1')
-    {
-        parameter_Ang=parameter_Ang - 0.05;
-        UARTprintf("parameter_Ang=%d",(int)(parameter_Ang*10));
-    }
-    else if (ReciveData_UART1[0]=='A'&&ReciveData_UART1[1]=='2')
-    {
-        parameter_Dis=parameter_Dis + 0.5;
-        UARTprintf("parameter_Dis%d",(int)(parameter_Dis));
-    }
-    else if (ReciveData_UART1[0]=='P'&&ReciveData_UART1[1]=='2')
-    {
-        parameter_Dis=parameter_Dis - 0.5;
-        UARTprintf("parameter_Dis%d",(int)(parameter_Dis));
-    }
-    if(ReciveData_UART1[0]=='F'||ReciveData_UART1[0]=='B'||ReciveData_UART1[0]=='R'||ReciveData_UART1[0]=='L')
-        MotorOrderDisplacement = (ReciveData_UART1[1]-48)*100+(ReciveData_UART1[2]-48)*10+(ReciveData_UART1[3]-48);
+//    if(ReciveData_UART1[0]=='F')
+//    {
+//        Counter = 0; //计数清零
+//        TimerEnable(TIMER0_BASE, TIMER_A);
+//        FlagSend = 1;
+//        MotorOrderDirection = 0;//前：0  后：1  左：2  右： 3
+//
+//        Beep_Flag = 1;
+//        Beep_Counter = 0;
+//        Beep_Fre = 50;
+//
+//    }
+//    else if (ReciveData_UART1[0]=='B')
+//    {
+//        Counter = 0; //计数清零
+//        TimerEnable(TIMER0_BASE, TIMER_A);
+//        FlagSend = 1;
+//        MotorOrderDirection = 1;//前：0  后：1  左：2  右： 3
+//
+//        Beep_Flag = 1;
+//        Beep_Counter = 0;
+//        Beep_Fre = 33;
+//
+//    }
+//    else if (ReciveData_UART1[0]=='L')
+//    {
+//        Counter = 0; //计数清零
+//        TimerEnable(TIMER0_BASE, TIMER_A);
+//        FlagSend =1;
+//        MotorOrderDirection = 2;//前：0  后：1  左：2  右： 3
+//
+//        Beep_Flag = 1;
+//        Beep_Counter = 0;
+//        Beep_Fre = 20;
+//
+//    }
+//    else if (ReciveData_UART1[0]=='R')
+//    {
+//        Counter = 0; //计数清零
+//        TimerEnable(TIMER0_BASE, TIMER_A);
+//        FlagSend = 1;
+//        MotorOrderDirection = 3;//前：0  后：1  左：2  右： 3
+//
+//        Beep_Flag = 1;
+//        Beep_Counter = 0;
+//        Beep_Fre = 40;
+//
+//    }
+//    else if (ReciveData_UART1[0]=='S'&&ReciveData_UART1[1]=='T'&&ReciveData_UART1[2]=='O'&&ReciveData_UART1[3]=='P')
+//    {
+//        Flag_Stop = 1;
+//        FlagSend = 0;
+//    }
+//    else if (ReciveData_UART1[0]=='S'&&ReciveData_UART1[1]=='T'&&ReciveData_UART1[2]=='A'&&ReciveData_UART1[3]=='R')
+//    {
+//        Flag_Stop = 0;
+//        FlagSend = 1;
+//    }
+////参数校准
+//    else if (ReciveData_UART1[0]=='A'&&ReciveData_UART1[1]=='1')
+//    {
+//        parameter_Ang=parameter_Ang + 0.05;
+//        UARTprintf("parameter_Ang=%d",(int)(parameter_Ang*10));
+//    }
+//    else if (ReciveData_UART1[0]=='P'&&ReciveData_UART1[1]=='1')
+//    {
+//        parameter_Ang=parameter_Ang - 0.05;
+//        UARTprintf("parameter_Ang=%d",(int)(parameter_Ang*10));
+//    }
+//    else if (ReciveData_UART1[0]=='A'&&ReciveData_UART1[1]=='2')
+//    {
+//        parameter_Dis=parameter_Dis + 0.5;
+//        UARTprintf("parameter_Dis%d",(int)(parameter_Dis));
+//    }
+//    else if (ReciveData_UART1[0]=='P'&&ReciveData_UART1[1]=='2')
+//    {
+//        parameter_Dis=parameter_Dis - 0.5;
+//        UARTprintf("parameter_Dis%d",(int)(parameter_Dis));
+//    }
+//    if(ReciveData_UART1[0]=='F'||ReciveData_UART1[0]=='B'||ReciveData_UART1[0]=='R'||ReciveData_UART1[0]=='L')
+//        MotorOrderDisplacement = (ReciveData_UART1[1]-48)*100+(ReciveData_UART1[2]-48)*10+(ReciveData_UART1[3]-48);
 }
 
 

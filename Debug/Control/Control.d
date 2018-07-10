@@ -29,7 +29,6 @@ Control/Control.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/adc.h
 Control/Control.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/pwm.h
 Control/Control.obj: D:/ti/TivaWare_C_Series-2.1.4.178/grlib/grlib.h
 Control/Control.obj: D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h
-Control/Control.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/uart.h
 Control/Control.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h
 Control/Control.obj: F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h
 Control/Control.obj: F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h
@@ -69,7 +68,6 @@ D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/adc.h:
 D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/pwm.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/grlib/grlib.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h: 
-D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/uart.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h: 
 F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h: 
 F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h: 

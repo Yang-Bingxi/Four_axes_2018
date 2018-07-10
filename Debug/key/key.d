@@ -30,7 +30,6 @@ key/key.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/adc.h
 key/key.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/pwm.h
 key/key.obj: D:/ti/TivaWare_C_Series-2.1.4.178/grlib/grlib.h
 key/key.obj: D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h
-key/key.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/uart.h
 key/key.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h
 key/key.obj: F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h
 key/key.obj: F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h
@@ -65,7 +64,6 @@ D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/adc.h:
 D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/pwm.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/grlib/grlib.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h: 
-D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/uart.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h: 
 F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h: 
 F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h: 

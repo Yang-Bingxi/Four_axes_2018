@@ -19,7 +19,7 @@
 #include "grlib/grlib.h"
 //#include "drivers/cfal96x64x16.h"
 #include "utils/uartstdio.h"
-#include "driverlib/uart.h"
+//#include "driverlib/uart.h"
 #include "driverlib/interrupt.h"
 #include "uart/uart.h"
 #include "delay/delay.h"
