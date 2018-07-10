@@ -24,5 +24,7 @@
 #include "uart/uart.h"
 #include "delay/delay.h"
 #include "utils/uartstdio.h"
+#include "Filter/filter.h"
+#include "Pid/pid.h"
 
 #endif

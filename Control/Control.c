@@ -15,6 +15,13 @@
 #include "9.6'OLED/OLED.h"
 #include "Control.h"
 
+/*
+ * 参数初始化
+ */
+//高度:单位 MM
+uint16_t Goal_Distance = 80;
+uint16_t Real_Distance;
+
 /*遥控器校准值
  *CH1 1100-1950
  *CH2 1100-1950
@@ -54,4 +61,7 @@ void LandMode(void)
     PwmControl_3(1100);
     PwmControl_4(1520);
 }
-
+void AltitudeHold(void)
+{
+    Real_Distance = GetAverageDistance();
+}

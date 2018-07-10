@@ -61,9 +61,10 @@ void Int_Handler_GPIOA(void)
 double GetAverageDistance()
 {
     int i = 0;
-    double dis[5] = {0, 0, 0, 0, 0 };
+    double dis[11] = {0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0};
     double AverageDistance = 0;
-    for( i=0 ; i<=4 ; i++)
+    for( i=0 ; i<=10 ; i++)
     {
         SonarTrig();
         if(DataIsReady == true)
@@ -71,8 +72,7 @@ double GetAverageDistance()
         dis[i] = fPeriod * 0.002125;
         }
      }
-    ShellSort(dis, 5);
-    AverageDistance = (dis[1]+dis[2]+dis[3]) /3.0;
+    AverageDistance = LimitingFilter(dis,11);
     return AverageDistance;
 }
 
@@ -103,36 +103,6 @@ void Sonar_GPIOA_Interrupt(void)
        IntMasterEnable();
 
 }
-//希尔排序
-// 最差时间复杂度 ---- 根据步长序列的不同而不同。已知最好的为O(n(logn)^2)
-// 最优时间复杂度 ---- O(n)
-// 平均时间复杂度 ---- 根据步长序列的不同而不同。
-// 所需辅助空间 ------ O(1)
-// 稳定性 ------------ 不稳定
-// 输出---------------从小到大
-void ShellSort(double A[], int n)
-{
-    int i = 0;
-    int h = 0;
-    while (h <= n)                          // 生成初始增量
-    {
-        h = 3 * h + 1;
-    }
-    while (h >= 1)
-    {
-        for (i = h; i < n; i++)
-        {
-            int j = i - h;
-            double get = A[i];
-            while (j >= 0 && A[j] > get)
-            {
-                A[j + h] = A[j];
-                j = j - h;
-            }
-            A[j + h] = get;
-        }
-        h = (h - 1) / 3;                    // 递减增量
-    }
-}
+
 
 

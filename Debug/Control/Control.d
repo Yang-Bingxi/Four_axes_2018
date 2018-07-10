@@ -32,6 +32,8 @@ Control/Control.obj: D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h
 Control/Control.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h
 Control/Control.obj: F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h
 Control/Control.obj: F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h
+Control/Control.obj: F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h
+Control/Control.obj: F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h
 Control/Control.obj: F:/ProjectFile/ccs/Four_axes_2018/colorful_LED/colorful_LED.h
 Control/Control.obj: F:/ProjectFile/ccs/Four_axes_2018/Pwm/pwm.h
 Control/Control.obj: F:/ProjectFile/ccs/Four_axes_2018/Timer/Timer.h
@@ -71,6 +73,8 @@ D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h:
 D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h: 
 F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h: 
 F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h: 
+F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h: 
+F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h: 
 F:/ProjectFile/ccs/Four_axes_2018/colorful_LED/colorful_LED.h: 
 F:/ProjectFile/ccs/Four_axes_2018/Pwm/pwm.h: 
 F:/ProjectFile/ccs/Four_axes_2018/Timer/Timer.h: 

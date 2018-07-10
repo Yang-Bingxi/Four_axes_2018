@@ -33,6 +33,8 @@ sonar/sonar.obj: D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h
 sonar/sonar.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h
 sonar/sonar.obj: F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h
 sonar/sonar.obj: F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h
+sonar/sonar.obj: F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h
+sonar/sonar.obj: F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h
 
 ../sonar/sonar.c: 
 ../sonar/sonar.h: 
@@ -67,3 +69,5 @@ D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h:
 D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h: 
 F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h: 
 F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h: 
+F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h: 
+F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h: 

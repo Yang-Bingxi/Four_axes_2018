@@ -35,6 +35,8 @@ main.obj: D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h
 main.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h
 main.obj: F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h
 main.obj: F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h
+main.obj: F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h
+main.obj: F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h
 main.obj: ../Timer/Timer.h
 main.obj: F:/ProjectFile/ccs/Four_axes_2018/9.6'OLED/oled.h
 main.obj: F:/ProjectFile/ccs/Four_axes_2018/9.6'OLED/bmp.h
@@ -79,6 +81,8 @@ D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h:
 D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h: 
 F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h: 
 F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h: 
+F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h: 
+F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h: 
 ../Timer/Timer.h: 
 F:/ProjectFile/ccs/Four_axes_2018/9.6'OLED/oled.h: 
 F:/ProjectFile/ccs/Four_axes_2018/9.6'OLED/bmp.h: 

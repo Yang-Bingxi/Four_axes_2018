@@ -37,6 +37,8 @@ uart/uart_echo.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/pwm.h
 uart/uart_echo.obj: D:/ti/TivaWare_C_Series-2.1.4.178/grlib/grlib.h
 uart/uart_echo.obj: D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h
 uart/uart_echo.obj: F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h
+uart/uart_echo.obj: F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h
+uart/uart_echo.obj: F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h
 
 ../uart/uart_echo.c: 
 D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/stdint.h: 
@@ -75,3 +77,5 @@ D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/pwm.h:
 D:/ti/TivaWare_C_Series-2.1.4.178/grlib/grlib.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h: 
 F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h: 
+F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h: 
+F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h: 
