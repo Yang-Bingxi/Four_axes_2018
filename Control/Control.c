@@ -19,8 +19,12 @@
  * 参数初始化
  */
 //高度:单位 MM
-uint16_t Goal_Distance = 80;
-uint16_t Real_Distance;
+uint16_t Goal_Distance = 800;//默认定高值800mm
+uint16_t Real_Distance = 0;
+uint16_t Error_Distance = 0;
+
+uint16_t Goal_XCoordinate,Goal_YCoordinate;
+uint16_t Real_XCoordinate,Real_YCoordinate;
 
 /*遥控器校准值
  *CH1 1100-1950
@@ -35,7 +39,9 @@ void UnlockPixhawk(void)
     Delay_ms(1000);//延时等待
     PwmControl_3(1100);
     PwmControl_4(1950);//解锁
-    Delay_ms(3000);
+    Delay_ms(1000);
+    Delay_ms(1000);
+    Delay_ms(1000);
     PwmControl_4(1520);
 
     PwmControl_1(1520);
@@ -50,7 +56,9 @@ void LockPixhawk(void)
 {
     PwmControl_3(1100);
     PwmControl_4(1950);//上锁
-    Delay_ms(3000);
+    Delay_ms(1000);
+    Delay_ms(1000);
+    Delay_ms(1000);
     PwmControl_4(1520);
 }
 void LandMode(void)
@@ -64,4 +72,10 @@ void LandMode(void)
 void AltitudeHold(void)
 {
     Real_Distance = GetAverageDistance();
+    if(Real_Distance>Goal_Distance)
+        Error_Distance = Real_Distance-Goal_Distance;
+    else if(Goal_Distance>Real_Distance)
+        Error_Distance = Goal_Distance-Real_Distance;
+
+
 }

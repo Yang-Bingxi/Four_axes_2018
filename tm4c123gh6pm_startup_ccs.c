@@ -57,6 +57,8 @@ extern uint32_t __STACK_TOP;
 // To be added by user
 extern void UARTIntHandler(void);
 extern void UART1IntHandler(void);
+extern void UART2IntHandler(void);
+
 extern void Timer0IntHandler(void);
 extern void Timer1IntHandler(void);
 extern void Int_Handler_GPIOA(void);
@@ -108,8 +110,8 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // ADC Sequence 3
     IntDefaultHandler,                      // Watchdog timer
     Timer0IntHandler,                      // Timer 0 subtimer A
-    Timer1IntHandler,                      // Timer 0 subtimer B
-    IntDefaultHandler,                      // Timer 1 subtimer A
+    IntDefaultHandler,                      // Timer 0 subtimer B
+    Timer1IntHandler,                      // Timer 1 subtimer A
     IntDefaultHandler,                      // Timer 1 subtimer B
     IntDefaultHandler,                      // Timer 2 subtimer A
     IntDefaultHandler,                      // Timer 2 subtimer B
@@ -121,7 +123,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // GPIO Port F
     IntDefaultHandler,                      // GPIO Port G
     IntDefaultHandler,                      // GPIO Port H
-    IntDefaultHandler,                      // UART2 Rx and Tx
+    UART2IntHandler,                      // UART2 Rx and Tx
     IntDefaultHandler,                      // SSI1 Rx and Tx
     IntDefaultHandler,                      // Timer 3 subtimer A
     IntDefaultHandler,                      // Timer 3 subtimer B

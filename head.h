@@ -26,5 +26,6 @@
 #include "utils/uartstdio.h"
 #include "Filter/filter.h"
 #include "Pid/pid.h"
+#include "sonar/sonar.h"
 
 #endif

@@ -72,6 +72,7 @@ void Timer0_Config(void)
   *   By Sw Young
   *   2018.03.29
   */
+uint8_t k=0;
 void Timer0IntHandler(void)
 {
     uint32_t ui32IntStatus;
@@ -82,6 +83,10 @@ void Timer0IntHandler(void)
     KeyPress0=(1+KeyPress0)%2;
     }
 
+    if(k)
+        {k=0;GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2, GPIO_PIN_2);}
+    else
+        {k=1;GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2, 0);}
 }
 void Timer1_Config(void)
 {
@@ -99,7 +104,7 @@ void Timer1_Config(void)
        //
         TimerConfigure(TIMER1_BASE, TIMER_CFG_PERIODIC);
 
-        TimerLoadSet(TIMER1_BASE, TIMER_A,  SysCtlClockGet() ); //5HZ
+        TimerLoadSet(TIMER1_BASE, TIMER_A,  800000); //Fre = 主频/800000 = 100HZ
 
        //
        // Setup the interrupts for the timer timeouts.
@@ -121,8 +126,12 @@ void Timer1_Config(void)
   *   By Sw Young
   *   2018.03.29
   */
-void Timer1IntHandler(void)
-{
+/*
+ * 定时器1的中断服务函数在PID.C中
+ */
+//uint8_t t=0;
+//void Timer1IntHandler(void)
+//{
 //    //
 //    // Clear the timer interrupt.
 //    //
@@ -131,12 +140,37 @@ void Timer1IntHandler(void)
 //    //
 //    // Update the interrupt status on the display.
 //    //
-//    if(MotorOrderDirection==0||MotorOrderDirection==1)
+///*
+// * test
+// */
+////    t =~ t;
+////    if(t)
+////        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, GPIO_PIN_1);
+////    else
+////        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
+//
+//    err_x = (int)(sonar_height * (get_x - CAMERA_MID_X));
+//    err_y = (int)(sonar_height * (get_y - CAMERA_MID_Y));
+//    PID_Data_X.Error = err_x;
+//    PID_Data_Y.Error = err_y;
+//    Position_PID();
+//    if(start_PID_X)
+//        set_ppm((channel_val_MID - 5 + PID_Data_X.PID_OUT),0,0,0,0,0);
+//    if(start_PID_Y)
+//        set_ppm(0,(channel_val_MID + PID_Data_Y.PID_OUT),0,0,0,0);
+//    if(start_PID_H)
 //    {
-//        UARTprintf("Dis%d",(Counter*20)/6400);
+//        if(sonar_height * 100  < (dest_height - 10))
+//        {
+//            set_ppm(0,0,channel_percent(61),0,0,0);
+//        }
+//        if(sonar_height * 100  > dest_height)
+//        {
+//            set_ppm(0,0,channel_percent(50),0,0,0);
+//        }
+//        if(sonar_height * 100  > (dest_height + 5))
+//        {
+//            set_ppm(0,0,channel_percent(39),0,0,0);
+//        }
 //    }
-//    else if (MotorOrderDirection==2||MotorOrderDirection==3)
-//    {
-//        UARTprintf("Ang%d",(int)(Counter/89.3));
-//    }
-}
+//}

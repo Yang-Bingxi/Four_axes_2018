@@ -35,6 +35,8 @@ Beep/Beep.obj: F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h
 Beep/Beep.obj: F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h
 Beep/Beep.obj: F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h
 Beep/Beep.obj: F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h
+Beep/Beep.obj: F:/ProjectFile/ccs/Four_axes_2018/sonar/sonar.h
+Beep/Beep.obj: F:/ProjectFile/ccs/Four_axes_2018/head.h
 
 ../Beep/Beep.c: 
 ../Beep/beep.h: 
@@ -71,3 +73,5 @@ F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h:
 F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h: 
 F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h: 
 F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h: 
+F:/ProjectFile/ccs/Four_axes_2018/sonar/sonar.h: 
+F:/ProjectFile/ccs/Four_axes_2018/head.h: 

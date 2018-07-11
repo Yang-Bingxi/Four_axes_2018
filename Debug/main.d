@@ -37,6 +37,8 @@ main.obj: F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h
 main.obj: F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h
 main.obj: F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h
 main.obj: F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h
+main.obj: F:/ProjectFile/ccs/Four_axes_2018/sonar/sonar.h
+main.obj: F:/ProjectFile/ccs/Four_axes_2018/head.h
 main.obj: ../Timer/Timer.h
 main.obj: F:/ProjectFile/ccs/Four_axes_2018/9.6'OLED/oled.h
 main.obj: F:/ProjectFile/ccs/Four_axes_2018/9.6'OLED/bmp.h
@@ -44,7 +46,6 @@ main.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/uart.h
 main.obj: ../uart/uartstdio.h
 main.obj: ../Beep/Beep.h
 main.obj: ../Control/Control.h
-main.obj: F:/ProjectFile/ccs/Four_axes_2018/sonar/sonar.h
 
 ../main.c: 
 D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/stdint.h: 
@@ -83,6 +84,8 @@ F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h:
 F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h: 
 F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h: 
 F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h: 
+F:/ProjectFile/ccs/Four_axes_2018/sonar/sonar.h: 
+F:/ProjectFile/ccs/Four_axes_2018/head.h: 
 ../Timer/Timer.h: 
 F:/ProjectFile/ccs/Four_axes_2018/9.6'OLED/oled.h: 
 F:/ProjectFile/ccs/Four_axes_2018/9.6'OLED/bmp.h: 
@@ -90,4 +93,3 @@ D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/uart.h:
 ../uart/uartstdio.h: 
 ../Beep/Beep.h: 
 ../Control/Control.h: 
-F:/ProjectFile/ccs/Four_axes_2018/sonar/sonar.h: 

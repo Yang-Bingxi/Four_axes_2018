@@ -34,6 +34,8 @@ Filter/filter.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h
 Filter/filter.obj: F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h
 Filter/filter.obj: F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h
 Filter/filter.obj: F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h
+Filter/filter.obj: F:/ProjectFile/ccs/Four_axes_2018/sonar/sonar.h
+Filter/filter.obj: F:/ProjectFile/ccs/Four_axes_2018/head.h
 
 ../Filter/filter.c: 
 ../Filter/filter.h: 
@@ -69,3 +71,5 @@ D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h:
 F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h: 
 F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h: 
 F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h: 
+F:/ProjectFile/ccs/Four_axes_2018/sonar/sonar.h: 
+F:/ProjectFile/ccs/Four_axes_2018/head.h: 

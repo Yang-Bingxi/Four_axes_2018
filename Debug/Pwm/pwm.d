@@ -35,6 +35,8 @@ Pwm/pwm.obj: F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h
 Pwm/pwm.obj: F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h
 Pwm/pwm.obj: F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h
 Pwm/pwm.obj: F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h
+Pwm/pwm.obj: F:/ProjectFile/ccs/Four_axes_2018/sonar/sonar.h
+Pwm/pwm.obj: F:/ProjectFile/ccs/Four_axes_2018/head.h
 
 ../Pwm/pwm.c: 
 ../Pwm/pwm.h: 
@@ -71,3 +73,5 @@ F:/ProjectFile/ccs/Four_axes_2018/uart/uart.h:
 F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h: 
 F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h: 
 F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h: 
+F:/ProjectFile/ccs/Four_axes_2018/sonar/sonar.h: 
+F:/ProjectFile/ccs/Four_axes_2018/head.h: 

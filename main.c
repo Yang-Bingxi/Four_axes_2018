@@ -60,6 +60,7 @@ void HardwareConfig(void)
 {
     Uart0Iint();        //串口0初始化
     Uart1Iint();        //串口1初始化
+    Uart2Iint();        //串口2初始化
 
     PwmConfig();            //初始化PWM
 
@@ -76,24 +77,26 @@ void HardwareConfig(void)
     Sonar_GPIOA_Interrupt();
 
     Timer0_Config();
+    Timer1_Config();
 
 }
 
-uint16_t Disetence ;
+extern uint16_t Real_XCoordinate,Real_YCoordinate;
+extern uint16_t Real_Distance ;
 int main(void)
 {
     SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN); //主频设置80M
     HardwareConfig();
+    Delay_ms(10);
     LED_Set(RED);
-    UnlockPixhawk();
+    //UnlockPixhawk();
     LED_Set(GREEN);
-    uint8_t t=0;
     while(1)
     {
         //UARTprintf("Hello");//调试用
-        Disetence = GetAverageDistance();
-        UARTprintf("Distance: %d\n",Disetence);
+        Real_Distance = GetAverageDistance();
+        UARTprintf("Distance: %d\n",Real_Distance);
+        UARTprintf("x=%d,y=%d",Real_XCoordinate,Real_YCoordinate);
         Delay_ms(1000);
-        t++;
     }
 }
