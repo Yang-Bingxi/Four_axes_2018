@@ -112,7 +112,7 @@ PDE_DEPS__QUOTED :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 . \
-9.6'OLED \
+0.96'OLED \
 Beep \
 Control \
 Filter \

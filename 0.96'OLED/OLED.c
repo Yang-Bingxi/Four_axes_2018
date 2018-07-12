@@ -1,6 +1,5 @@
-#include "oled.h"
-//#include "stdlib.h"
-#include "oledfont.h"
+#include <0.96'OLED/OLED.h>
+#include <0.96'OLED/OLEDFONT.h>
 #include "delay.h"
 #include "inc/hw_types.h"
 #include "inc/hw_memmap.h"

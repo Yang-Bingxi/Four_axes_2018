@@ -24,6 +24,8 @@ colorful_LED/colorful_LED.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/adc.h
 colorful_LED/colorful_LED.obj: D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h
 colorful_LED/colorful_LED.obj: D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/stdarg.h
 colorful_LED/colorful_LED.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/pwm.h
+colorful_LED/colorful_LED.obj: F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h
+colorful_LED/colorful_LED.obj: ../colorful_LED/colorful_LED.h
 
 ../colorful_LED/colorful_LED.c: 
 D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/stdint.h: 
@@ -49,3 +51,5 @@ D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/adc.h:
 D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h: 
 D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/stdarg.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/pwm.h: 
+F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h: 
+../colorful_LED/colorful_LED.h: 

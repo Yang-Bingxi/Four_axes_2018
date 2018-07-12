@@ -4,15 +4,15 @@
  *  Created on: 2018Äê7ÔÂ10ÈÕ
  *      Author: Sw Young
  */
+#include <0.96'OLED/OLED.h>
+#include <0.96'OLED/OLED.h>
 #include "head.h"
 #include "colorful_LED/colorful_LED.h"
 #include "Pwm/pwm.h"
 #include "Timer/Timer.h"
-#include "oled.h"
 #include "delay/delay.h"
 #include "uart/uart.h"
 #include "Beep/Beep.h"
-#include "9.6'OLED/OLED.h"
 #include "Control.h"
 
 /*
@@ -92,6 +92,25 @@ void AltitudeHold(void)
         Error_Distance = Real_Distance-Goal_Distance;
     else if(Goal_Distance>Real_Distance)
         Error_Distance = Goal_Distance-Real_Distance;
-
-
+}
+void OledDisplayInit(void)
+{
+    OLED_Clear();
+    OLED_ShowString(16,0,"FourAxes2018",16);
+    OLED_ShowString(6,3,"AxesState:",16);
+    OLED_ShowString(90,3,"OFF",16);
+    OLED_ShowString(6,6,"GoalDis:",16);
+    OLED_ShowNum(50,6,Goal_Distance,4,16);
+    OLED_ShowString(80,88,"MM",16);
+}
+void Display(void)
+{
+    OLED_ShowString(6,3,"AxesState:",16);
+    if(Control_Open)
+        OLED_ShowString(90,3,"ON ",16);
+    else
+        OLED_ShowString(90,3,"OFF",16);
+    OLED_ShowString(6,6,"GoalDis:",16);
+    OLED_ShowNum(56,6,Goal_Distance,4,16);
+    OLED_ShowString(88,6,"MM",16);
 }

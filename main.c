@@ -5,6 +5,9 @@
 程序说明:
 编程者: Young sw
 ********************************************/
+#include <0.96'OLED/bmp.h>
+#include <0.96'OLED/OLED.h>
+#include <0.96'OLED/OLED.h>
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -42,15 +45,12 @@
 #include "colorful_LED/colorful_LED.h"
 #include "Pwm/pwm.h"
 #include "Timer/Timer.h"
-#include "oled.h"
-#include "bmp.h"
 #include "delay/delay.h"
 #include "utils/uartstdio.h"
 #include "driverlib/uart.h"
 #include "uart/uart.h"
 #include "uart/uartstdio.h"
 #include "Beep/Beep.h"
-#include "9.6'OLED/OLED.h"
 #include "head.h"
 #include "Control/Control.h"
 #include "sonar.h"
@@ -86,20 +86,27 @@ void HardwareConfig(void)
 
 extern uint16_t Real_XCoordinate,Real_YCoordinate;//申明坐标
 extern uint16_t Real_Distance ;//申明高度
+extern uint8_t Control_Open;
+
 int main(void)
+
 {
     SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN); //主频设置80M
     HardwareConfig();//硬件初始化
     Delay_ms(10);
     LED_Set(RED);
-    UnlockPixhawk();
-    LED_Set(GREEN);
+
+
+    OledDisplayInit();
     while(1)
     {
        //UARTprintf("Hello");//调试用
        // Real_Distance = GetAverageDistance();//获取高度在定时器中
+        if(Control_Open)
+            {UnlockPixhawk();LED_Set(GREEN);}
+        Display();
         UARTprintf("Distance: %d\n",Real_Distance);
         UARTprintf("x=%d,y=%d\n",Real_XCoordinate,Real_YCoordinate);
-        Delay_ms(1000);
+        Delay_ms(500);
     }
 }

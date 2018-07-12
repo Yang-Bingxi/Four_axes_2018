@@ -184,11 +184,11 @@ void Timer1IntHandler(void)
     /*
      * test
      */
-        t =~ t;
-        if(t)
-            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, GPIO_PIN_1);
-        else
-            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
+//        t =~ t;
+//        if(t)
+//            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, GPIO_PIN_1);
+//        else
+//            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
 
     Get_Coordinate();//获取坐标值
     Get_Distance();//获取高度

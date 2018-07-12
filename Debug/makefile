@@ -12,7 +12,7 @@ GEN_CMDS__FLAG :=
 ORDERED_OBJS += \
 "./main.obj" \
 "./tm4c123gh6pm_startup_ccs.obj" \
-"./9.6'OLED/OLED.obj" \
+"./0.96'OLED/OLED.obj" \
 "./Beep/Beep.obj" \
 "./Control/Control.obj" \
 "./Filter/filter.obj" \
@@ -38,7 +38,7 @@ RMDIR := RMDIR /S/Q
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
--include 9.6'OLED/subdir_vars.mk
+-include 0.96'OLED/subdir_vars.mk
 -include Beep/subdir_vars.mk
 -include Control/subdir_vars.mk
 -include Filter/subdir_vars.mk
@@ -51,7 +51,7 @@ RMDIR := RMDIR /S/Q
 -include sonar/subdir_vars.mk
 -include uart/subdir_vars.mk
 -include subdir_rules.mk
--include 9.6'OLED/subdir_rules.mk
+-include 0.96'OLED/subdir_rules.mk
 -include Beep/subdir_rules.mk
 -include Control/subdir_rules.mk
 -include Filter/subdir_rules.mk
@@ -193,8 +193,8 @@ Four_axes_2018.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "9.6'OLED\OLED.obj" "Beep\Beep.obj" "Control\Control.obj" "Filter\filter.obj" "Pid\pid.obj" "Pwm\pwm.obj" "Timer\Timer.obj" "colorful_LED\colorful_LED.obj" "delay\delay.obj" "key\key.obj" "sonar\sonar.obj" "uart\uart_echo.obj" "uart\uartstdio.obj" 
-	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "9.6'OLED\OLED.d" "Beep\Beep.d" "Control\Control.d" "Filter\filter.d" "Pid\pid.d" "Pwm\pwm.d" "Timer\Timer.d" "colorful_LED\colorful_LED.d" "delay\delay.d" "key\key.d" "sonar\sonar.d" "uart\uart_echo.d" "uart\uartstdio.d" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "0.96'OLED\OLED.obj" "Beep\Beep.obj" "Control\Control.obj" "Filter\filter.obj" "Pid\pid.obj" "Pwm\pwm.obj" "Timer\Timer.obj" "colorful_LED\colorful_LED.obj" "delay\delay.obj" "key\key.obj" "sonar\sonar.obj" "uart\uart_echo.obj" "uart\uartstdio.obj" 
+	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "0.96'OLED\OLED.d" "Beep\Beep.d" "Control\Control.d" "Filter\filter.d" "Pid\pid.d" "Pwm\pwm.d" "Timer\Timer.d" "colorful_LED\colorful_LED.d" "delay\delay.d" "key\key.d" "sonar\sonar.d" "uart\uart_echo.d" "uart\uartstdio.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

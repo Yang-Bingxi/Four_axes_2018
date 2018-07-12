@@ -1,5 +1,6 @@
+#include <0.96'OLED/OLED.h>
+#include "colorful_LED/colorful_LED.h"
 #include "key.h"
-
 uint32_t ReadPin0;
 uint32_t ReadPin4;
 int KeyPress4=0;
@@ -73,6 +74,7 @@ int Key_Scan(int PF)
        return KeyFlag;
 }
 
+uint8_t KEY_L = 0,KEY_R = 0;
 void Int_Handler_GPIOF(void)
 {
     uint32_t ui32IntStatus;
@@ -82,14 +84,51 @@ void Int_Handler_GPIOF(void)
     {
         GPIOIntDisable(GPIO_PORTF_BASE, GPIO_PIN_4);                     //打开外部中断
         UARTprintf("Key1 Is OK\n");
-        Control_Open = 1;
+        //Control_Open = 1;
+        KEY_L++;
+        if(KEY_L>3)
+            KEY_L=0;
+        if(KEY_L==1)
+        {
+            OLED_ShowString(115, 6, "A", 16);
+            OLED_ShowString(115, 3, " ", 16);
+        }
+        else if(KEY_L==2)
+        {
+            OLED_ShowString(115, 6, "S", 16);
+            OLED_ShowString(115, 3, " ", 16);
+        }
+        else if(KEY_L==3)
+        {
+            OLED_ShowString(115, 6, " ", 16);
+            OLED_ShowString(115, 3, "@", 16);
+        }
+        else
+        {
+            OLED_ShowString(115, 6, " ", 16);
+            OLED_ShowString(115, 3, " ", 16);
+        }
+        Led_Twinkle(MAGENTA,1);
         while(!GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4));
     }
      if((ui32IntStatus & GPIO_PIN_0)  == GPIO_PIN_0)//PF0
     {
          GPIOIntDisable(GPIO_PORTF_BASE, GPIO_PIN_0);                     //打开外部中断
          UARTprintf("Key2 Is OK\n");
-         Control_Open = 0;
+         //Control_Open = 0;
+         if(KEY_L==1&&Goal_Distance<2000)
+         {
+             Goal_Distance += 50;
+         }
+         else if(KEY_L==2&&Goal_Distance>300)
+         {
+             Goal_Distance -= 50;
+         }
+         else if(KEY_L==3)
+         {
+             Control_Open =~ Control_Open;
+         }
+         Led_Twinkle(MAGENTA,1);
          while(!GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0));
     }
     GPIOIntEnable(GPIO_PORTF_BASE, GPIO_PIN_4 | GPIO_PIN_0);                     //打开外部中断

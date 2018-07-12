@@ -22,6 +22,8 @@
 #include "driverlib/adc.h"
 #include "utils/uartstdio.h"
 #include "driverlib/pwm.h"
+#include "delay/delay.h"
+#include "colorful_LED.h"
 
 void LED_ColorInit(void)
 {
@@ -109,5 +111,21 @@ void LED_Set(uint8_t color)
         GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, GPIO_PIN_1);
         GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2, GPIO_PIN_2);
         GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3, GPIO_PIN_3);
+    }
+    if(color==7)
+    {
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2, 0);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3, 0);
+    }
+}
+void Led_Twinkle(uint8_t color,uint8_t times)
+{
+    uint8_t t=0;
+    for(t=0;t<times;t++)
+    {
+        LED_Set(color);
+        Delay_ms(30);
+        LED_Set(LedOff);
     }
 }
