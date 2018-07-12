@@ -28,6 +28,10 @@
 #define DEFAULT_KI_Y        0.00f
 #define DEFAULT_KD_Y        0.30f
 
+#define DEFAULT_KP_H        0.1f
+#define DEFAULT_KI_H        0.0f
+#define DEFAULT_KD_H        0.0f
+
 #define DEFAULT_I_MAX       50.0f
 #define DEFAULT_OUT_MAX     80.0f
 #define DEFAULT_PID_FREQ    50.0f

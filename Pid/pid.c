@@ -7,11 +7,17 @@
 
 #include "pid.h"
 #include "timer.h"
+#include "Control/Control.h"
+#include "Pwm/pwm.h"
+
+extern uint8_t Control_Open;
 
 PID_K PID_X;
 PID_K PID_Y;
+PID_K PID_H;
 PID_Data PID_Data_X;
 PID_Data PID_Data_Y;
+PID_Data PID_Data_H;
 
 bool start_PID_X = false;
 bool start_PID_Y = false;
@@ -19,6 +25,8 @@ bool start_PID_H = false;
 
 volatile int err_x = 0;
 volatile int err_y = 0;
+volatile int err_h = 0;
+
 volatile uint8_t get_x = CAMERA_MID_X, get_y = CAMERA_MID_Y;
 
 void PID_Init(void)
@@ -56,6 +64,22 @@ void PID_Init(void)
     PID_Data_Y.Last_Derivative = 0.0;
     PID_Data_Y.Derivative      = 0.0;
     PID_Data_Y.PID_OUT         = 0.0;
+
+    PID_H.Kp           = DEFAULT_KP_H;
+    PID_H.Ki           = 0;
+    PID_H.Kd           = 0;
+    PID_H.dt           = 0;
+    PID_H.d_LPF        = 0;
+    PID_H.I_MAX        = 0;
+    PID_H.OUT_MAX      = 0;
+
+    PID_Data_H.LastError       = 0.0;
+    PID_Data_H.Error           = 0.0;
+    PID_Data_H.Proportion      = 0.0;
+    PID_Data_H.Integrator      = 0.0;
+    PID_Data_H.Last_Derivative = 0.0;
+    PID_Data_H.Derivative      = 0.0;
+    PID_Data_H.PID_OUT         = 0.0;
 }
 
 void Position_PID(void)
@@ -155,37 +179,50 @@ void Timer1IntHandler(void)
     //
     // Update the interrupt status on the display.
     //
-/*
- * test
- */
-//    t =~ t;
-//    if(t)
-//        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, GPIO_PIN_1);
-//    else
-//        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
+    TimerIntDisable(TIMER1_BASE, TIMER_A);
+    if(Control_Open)
+    /*
+     * test
+     */
+        t =~ t;
+        if(t)
+            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, GPIO_PIN_1);
+        else
+            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
 
+    Get_Coordinate();//获取坐标值
+    Get_Distance();//获取高度
     err_x = (int)(Real_Distance * (get_x - CAMERA_MID_X));
     err_y = (int)(Real_Distance * (get_y - CAMERA_MID_Y));
     PID_Data_X.Error = err_x;
     PID_Data_Y.Error = err_y;
     Position_PID();
     if(start_PID_X)
-        //set_ppm((channel_val_MID - 5 + PID_Data_X.PID_OUT),0,0,0,0,0);
+        PwmControl_1(channel_val_MID+PID_Data_X.PID_OUT);
     if(start_PID_Y)
-        //set_ppm(0,(channel_val_MID + PID_Data_Y.PID_OUT),0,0,0,0);
+        PwmControl_2(channel_val_MID+PID_Data_Y.PID_OUT);
     if(start_PID_H)
     {
-        if(Real_Distance * 100  < (Goal_Distance - 10))
+        if(Real_Distance < (Goal_Distance - 10))
         {
-            //set_ppm(0,0,channel_percent(61),0,0,0);
+            err_h = Goal_Distance-Real_Distance;
+            //PwmControl_3(1600);//油门量60%//无pid调节
+            PwmControl_3(channel_val_MID+PID_H.Kp*err_h);
         }
-        if(Real_Distance * 100  > Goal_Distance)
+
+        if(Real_Distance > (Goal_Distance + 10))
+        {
+            err_h = Real_Distance-Goal_Distance;
+            //PwmControl_3(1435);//油门量39%//无pid调节
+            PwmControl_3(channel_val_MID-PID_H.Kp*err_h);
+
+        }
+        else if((Real_Distance-Goal_Distance<10)||(Goal_Distance-Real_Distance>10))//调节死区 -10 ~ +10
         {
             //set_ppm(0,0,channel_percent(50),0,0,0);
-        }
-        if(Real_Distance * 100  > (Goal_Distance + 5))
-        {
-            //set_ppm(0,0,channel_percent(39),0,0,0);
+            PwmControl_3(channel_val_MID-PID_H.Kp*0);
         }
     }
+    TimerIntEnable(TIMER1_BASE, TIMER_A);
+
 }

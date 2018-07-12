@@ -8,10 +8,10 @@
   ******************************************************************************
   * 说明：
   * 硬件平台：
-  *   MCUc:TM4C123、2相四线步进电机、DRV8825电机驱动、WiFi
+  *   MCUc:TM4C123
   * 软件设计说明：
-  *   通过无线精确控制小车的前进、后退距离；左转右转角度。
-  * Github：https://github.com/youngsw/Remote_Control_Car_PointRace_3_Car
+  *
+  * Github：
   ******************************************************************************
 **/
 #include "timer.h"
@@ -25,7 +25,7 @@ uint32_t Beep_Fre = 40;
 
 /**
   * 函 数 名:MotorContolTimer.c
-  * 函数功能: 电机定时器
+  * 函数功能:
   * 输入参数: 无
   * 返 回 值: 无
   * 说    明:
@@ -65,7 +65,7 @@ void Timer0_Config(void)
 }
 /**
   * 函 数 名:Timer0IntHandler.c
-  * 函数功能: 电机定时器中断
+  * 函数功能:
   * 输入参数: 无
   * 返 回 值: 无
   * 说    明:
@@ -119,7 +119,7 @@ void Timer1_Config(void)
 }
 /**
   * 函 数 名:Timer1IntHandler.c
-  * 函数功能: 串口参数发送定时器中断
+  * 函数功能:
   * 输入参数: 无
   * 返 回 值: 无
   * 说    明:
@@ -129,48 +129,4 @@ void Timer1_Config(void)
 /*
  * 定时器1的中断服务函数在PID.C中
  */
-//uint8_t t=0;
-//void Timer1IntHandler(void)
-//{
-//    //
-//    // Clear the timer interrupt.
-//    //
-//    TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
-//
-//    //
-//    // Update the interrupt status on the display.
-//    //
-///*
-// * test
-// */
-////    t =~ t;
-////    if(t)
-////        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, GPIO_PIN_1);
-////    else
-////        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
-//
-//    err_x = (int)(sonar_height * (get_x - CAMERA_MID_X));
-//    err_y = (int)(sonar_height * (get_y - CAMERA_MID_Y));
-//    PID_Data_X.Error = err_x;
-//    PID_Data_Y.Error = err_y;
-//    Position_PID();
-//    if(start_PID_X)
-//        set_ppm((channel_val_MID - 5 + PID_Data_X.PID_OUT),0,0,0,0,0);
-//    if(start_PID_Y)
-//        set_ppm(0,(channel_val_MID + PID_Data_Y.PID_OUT),0,0,0,0);
-//    if(start_PID_H)
-//    {
-//        if(sonar_height * 100  < (dest_height - 10))
-//        {
-//            set_ppm(0,0,channel_percent(61),0,0,0);
-//        }
-//        if(sonar_height * 100  > dest_height)
-//        {
-//            set_ppm(0,0,channel_percent(50),0,0,0);
-//        }
-//        if(sonar_height * 100  > (dest_height + 5))
-//        {
-//            set_ppm(0,0,channel_percent(39),0,0,0);
-//        }
-//    }
-//}
+

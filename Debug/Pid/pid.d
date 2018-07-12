@@ -37,6 +37,8 @@ Pid/pid.obj: F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h
 Pid/pid.obj: F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h
 Pid/pid.obj: F:/ProjectFile/ccs/Four_axes_2018/sonar/sonar.h
 Pid/pid.obj: F:/ProjectFile/ccs/Four_axes_2018/head.h
+Pid/pid.obj: F:/ProjectFile/ccs/Four_axes_2018/Control/Control.h
+Pid/pid.obj: F:/ProjectFile/ccs/Four_axes_2018/Pwm/pwm.h
 
 ../Pid/pid.c: 
 ../Pid/pid.h: 
@@ -75,3 +77,5 @@ F:/ProjectFile/ccs/Four_axes_2018/delay/delay.h:
 F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h: 
 F:/ProjectFile/ccs/Four_axes_2018/sonar/sonar.h: 
 F:/ProjectFile/ccs/Four_axes_2018/head.h: 
+F:/ProjectFile/ccs/Four_axes_2018/Control/Control.h: 
+F:/ProjectFile/ccs/Four_axes_2018/Pwm/pwm.h: 

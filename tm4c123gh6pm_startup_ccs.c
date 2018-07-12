@@ -62,6 +62,7 @@ extern void UART2IntHandler(void);
 extern void Timer0IntHandler(void);
 extern void Timer1IntHandler(void);
 extern void Int_Handler_GPIOA(void);
+void Int_Handler_GPIOF(void);
 
 //*****************************************************************************
 //
@@ -120,7 +121,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // Analog Comparator 2
     IntDefaultHandler,                      // System Control (PLL, OSC, BO)
     IntDefaultHandler,                      // FLASH Control
-    IntDefaultHandler,                      // GPIO Port F
+    Int_Handler_GPIOF,                      // GPIO Port F
     IntDefaultHandler,                      // GPIO Port G
     IntDefaultHandler,                      // GPIO Port H
     UART2IntHandler,                      // UART2 Rx and Tx

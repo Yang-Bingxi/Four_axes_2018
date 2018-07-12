@@ -46,6 +46,7 @@ main.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/uart.h
 main.obj: ../uart/uartstdio.h
 main.obj: ../Beep/Beep.h
 main.obj: ../Control/Control.h
+main.obj: ../key/key.h
 
 ../main.c: 
 D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/stdint.h: 
@@ -93,3 +94,4 @@ D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/uart.h:
 ../uart/uartstdio.h: 
 ../Beep/Beep.h: 
 ../Control/Control.h: 
+../key/key.h: 

@@ -25,6 +25,9 @@ uint16_t Error_Distance = 0;
 
 uint16_t Goal_XCoordinate,Goal_YCoordinate;
 uint16_t Real_XCoordinate,Real_YCoordinate;
+extern volatile uint8_t get_x, get_y;
+
+uint8_t Control_Open = 0;
 
 /*遥控器校准值
  *CH1 1100-1950
@@ -35,6 +38,10 @@ uint16_t Real_XCoordinate,Real_YCoordinate;
  */
 void UnlockPixhawk(void)
 {
+    PwmControl_1(1520);
+    PwmControl_2(1520);
+    PwmControl_3(1100);
+    PwmControl_4(1520);
     PwmControl_5(1100); //自稳模式
     Delay_ms(1000);//延时等待
     PwmControl_3(1100);
@@ -68,6 +75,15 @@ void LandMode(void)
     PwmControl_2(1520);
     PwmControl_3(1100);
     PwmControl_4(1520);
+}
+void Get_Coordinate(void)
+{
+    get_x = Real_XCoordinate;
+    get_y = Real_YCoordinate;
+}
+void Get_Distance(void)
+{
+    Real_Distance = GetAverageDistance();
 }
 void AltitudeHold(void)
 {

@@ -14,14 +14,14 @@
   * 作    者: By Sw Young
   * 版    本: V1.0
   * 功    能:
-  * 编写日期: 2018.3.29
+  * 编写日期: 2018.7.6
   ******************************************************************************
   * 说明：
   * 硬件平台：
-  *   MCUc:TM4C123、2相四线步进电机、DRV8825电机驱动、WiFi
+  *   MCUc:TM4C123、Pixhawk、无线串口、无刷电机
   * 软件设计说明：
-  *   通过无线精确控制小车的前进、后退距离；左转右转角度。
-  * Github：https://github.com/youngsw/Remote_Control_Car_PointRace_3_Car
+  *     测高、获取图像坐标在定时器中完成，左边按键开启定时器功能，右边按键关闭定时器功能。
+  * Github：
   ******************************************************************************
 **/
 #include <stdint.h>
@@ -54,6 +54,7 @@
 #include "head.h"
 #include "Control/Control.h"
 #include "sonar.h"
+#include "key/key.h"
 
 
 void HardwareConfig(void)
@@ -72,31 +73,33 @@ void HardwareConfig(void)
     Delay_ms(5);            //延时等待OLED初始化
     OLED_DrawBMP(0,0,128,8,BMP3);
 
-    Sonar_Configure();
+    Sonar_Configure();      //超声波初始化
     Sonar_GPIOA_Configure();
     Sonar_GPIOA_Interrupt();
 
-    Timer0_Config();
+    Timer0_Config();    //定时器初始化
     Timer1_Config();
 
+    Key_Configure();    //按键初始化
+    Key_Interrupt();    //按键中断
 }
 
-extern uint16_t Real_XCoordinate,Real_YCoordinate;
-extern uint16_t Real_Distance ;
+extern uint16_t Real_XCoordinate,Real_YCoordinate;//申明坐标
+extern uint16_t Real_Distance ;//申明高度
 int main(void)
 {
     SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN); //主频设置80M
-    HardwareConfig();
+    HardwareConfig();//硬件初始化
     Delay_ms(10);
     LED_Set(RED);
-    //UnlockPixhawk();
+    UnlockPixhawk();
     LED_Set(GREEN);
     while(1)
     {
-        //UARTprintf("Hello");//调试用
-        Real_Distance = GetAverageDistance();
+       //UARTprintf("Hello");//调试用
+       // Real_Distance = GetAverageDistance();//获取高度在定时器中
         UARTprintf("Distance: %d\n",Real_Distance);
-        UARTprintf("x=%d,y=%d",Real_XCoordinate,Real_YCoordinate);
+        UARTprintf("x=%d,y=%d\n",Real_XCoordinate,Real_YCoordinate);
         Delay_ms(1000);
     }
 }
