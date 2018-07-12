@@ -82,15 +82,21 @@ void HardwareConfig(void)
 
     Key_Configure();    //按键初始化
     Key_Interrupt();    //按键中断
+
+    PID_Init();
 }
 
 extern uint16_t Real_XCoordinate,Real_YCoordinate;//申明坐标
-extern uint16_t Real_Distance ;//申明高度
+extern uint16_t Real_Distance,Real_Distance ;//申明高度
 extern uint8_t Control_Open;
+extern bool start_PID_H;
 
 int main(void)
 
 {
+    FPULazyStackingEnable();
+    FPUEnable();
+
     SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN); //主频设置80M
     HardwareConfig();//硬件初始化
     Delay_ms(10);
@@ -98,14 +104,21 @@ int main(void)
 
 
     OledDisplayInit();
+    //test
+    start_PID_H = true;
+    float a =0.1;
+    UARTprintf("%d\n",(int)(a*1000));
+    UARTprintf("kp:%d\n",(int)(1000*0.1));
     while(1)
     {
        //UARTprintf("Hello");//调试用
        // Real_Distance = GetAverageDistance();//获取高度在定时器中
         if(Control_Open)
             {UnlockPixhawk();LED_Set(GREEN);}
+
         Display();
-        UARTprintf("Distance: %d\n",Real_Distance);
+        UARTprintf("RealDistance: %d\n",Real_Distance);
+        UARTprintf("GoalDistance: %d\n",Goal_Distance);
         UARTprintf("x=%d,y=%d\n",Real_XCoordinate,Real_YCoordinate);
         Delay_ms(500);
     }

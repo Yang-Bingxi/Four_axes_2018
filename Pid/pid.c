@@ -23,11 +23,11 @@ bool start_PID_X = false;
 bool start_PID_Y = false;
 bool start_PID_H = false;
 
-volatile int err_x = 0;
-volatile int err_y = 0;
-volatile int err_h = 0;
+uint16_t err_x = 0;
+uint16_t err_y = 0;
+uint16_t err_h = 0;
 
-volatile uint8_t get_x = CAMERA_MID_X, get_y = CAMERA_MID_Y;
+uint8_t get_x = CAMERA_MID_X, get_y = CAMERA_MID_Y;
 
 void PID_Init(void)
 {
@@ -181,48 +181,59 @@ void Timer1IntHandler(void)
     //
     TimerIntDisable(TIMER1_BASE, TIMER_A);
     if(Control_Open)
-    /*
-     * test
-     */
-//        t =~ t;
-//        if(t)
-//            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, GPIO_PIN_1);
-//        else
-//            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
-
-    Get_Coordinate();//获取坐标值
-    Get_Distance();//获取高度
-    err_x = (int)(Real_Distance * (get_x - CAMERA_MID_X));
-    err_y = (int)(Real_Distance * (get_y - CAMERA_MID_Y));
-    PID_Data_X.Error = err_x;
-    PID_Data_Y.Error = err_y;
-    Position_PID();
-    if(start_PID_X)
-        PwmControl_1(channel_val_MID+PID_Data_X.PID_OUT);
-    if(start_PID_Y)
-        PwmControl_2(channel_val_MID+PID_Data_Y.PID_OUT);
-    if(start_PID_H)
     {
-        if(Real_Distance < (Goal_Distance - 10))
-        {
-            err_h = Goal_Distance-Real_Distance;
-            //PwmControl_3(1600);//油门量60%//无pid调节
-            PwmControl_3(channel_val_MID+PID_H.Kp*err_h);
-        }
+    /*
+        * test
+        */
+   //        t =~ t;
+   //        if(t)
+   //            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, GPIO_PIN_1);
+   //        else
+   //            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
 
-        if(Real_Distance > (Goal_Distance + 10))
-        {
-            err_h = Real_Distance-Goal_Distance;
-            //PwmControl_3(1435);//油门量39%//无pid调节
-            PwmControl_3(channel_val_MID-PID_H.Kp*err_h);
+       Get_Coordinate();//获取坐标值
+       Get_Distance();//获取高度
+       err_x = (int)(Real_Distance * (get_x - CAMERA_MID_X));
+       err_y = (int)(Real_Distance * (get_y - CAMERA_MID_Y));
+       PID_Data_X.Error = err_x;
+       PID_Data_Y.Error = err_y;
+       Position_PID();
+       if(start_PID_X)
+           PwmControl_1(channel_val_MID+PID_Data_X.PID_OUT);
+       if(start_PID_Y)
+           PwmControl_2(channel_val_MID+PID_Data_Y.PID_OUT);
+       if(start_PID_H)
+       {
+           if(Real_Distance < (Goal_Distance - 100))
+           {
+               err_h = Goal_Distance-Real_Distance;
+               //PwmControl_3(1600);//油门量60%//无pid调节
+               PwmControl_3(channel_val_MID+(int)(PID_H.Kp*err_h));
+               UARTprintf("Throttle:%d\n",(channel_val_MID+(int)(PID_H.Kp*err_h)));
+               UARTprintf("err_h:%d\n",err_h);
+               UARTprintf("kp:%d\n",(int)(1000*PID_H.Kp));
 
-        }
-        else if((Real_Distance-Goal_Distance<10)||(Goal_Distance-Real_Distance>10))//调节死区 -10 ~ +10
-        {
-            //set_ppm(0,0,channel_percent(50),0,0,0);
-            PwmControl_3(channel_val_MID-PID_H.Kp*0);
-        }
+           }
+           else if(Real_Distance > (Goal_Distance + 100))
+           {
+               err_h = Real_Distance-Goal_Distance;
+               //PwmControl_3(1435);//油门量39%//无pid调节
+               PwmControl_3(channel_val_MID-(int)(PID_H.Kp*err_h));
+               UARTprintf("Throttle:%d\n",channel_val_MID-(int)(PID_H.Kp*err_h));
+               UARTprintf("err_h:%d\n",err_h);
+               UARTprintf("kp:%d\n",(int)(1000*PID_H.Kp));
+           }
+           else if((Real_Distance-Goal_Distance<100)||(Goal_Distance-Real_Distance<100))//调节死区 -100 ~ +100
+           {
+               //set_ppm(0,0,channel_percent(50),0,0,0);
+               PwmControl_3(channel_val_MID-(int)(0*err_h));
+               UARTprintf("Throttle:%d\n",channel_val_MID+(int)(PID_H.Kp*0));
+               UARTprintf("err_h:%d\n",err_h);
+               UARTprintf("kp:%d\n",(int)(1000*PID_H.Kp));
+           }
+       }
     }
+
     TimerIntEnable(TIMER1_BASE, TIMER_A);
 
 }
