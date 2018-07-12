@@ -23,8 +23,8 @@ bool start_PID_X = false;
 bool start_PID_Y = false;
 bool start_PID_H = false;
 
-uint16_t err_x = 0;
-uint16_t err_y = 0;
+int err_x = 0;
+int err_y = 0;
 uint16_t err_h = 0;
 
 uint8_t get_x = CAMERA_MID_X, get_y = CAMERA_MID_Y;
@@ -57,7 +57,7 @@ void PID_Init(void)
     PID_Y.I_MAX        = DEFAULT_I_MAX;
     PID_Y.OUT_MAX      = DEFAULT_OUT_MAX;
 
-    PID_Data_Y.LastError      = 0.0;
+    PID_Data_Y.LastError       = 0.0;
     PID_Data_Y.Error           = 0.0;
     PID_Data_Y.Proportion      = 0.0;
     PID_Data_Y.Integrator      = 0.0;
@@ -193,8 +193,12 @@ void Timer1IntHandler(void)
 
        Get_Coordinate();//获取坐标值
        Get_Distance();//获取高度
-       err_x = (int)(Real_Distance * (get_x - CAMERA_MID_X));
-       err_y = (int)(Real_Distance * (get_y - CAMERA_MID_Y));
+       UARTprintf("RealDistance:%d\n",Real_Distance);
+       UARTprintf("get_x:%d get_y:%d\n",get_x,get_y);
+       err_x = (int)(Real_Distance/100 * (get_x - CAMERA_MID_X));
+       err_y = (int)(Real_Distance/100 * (get_y - CAMERA_MID_Y));
+       UARTprintf("get_x:%d get_y:%d\n",err_x,err_y);
+
        PID_Data_X.Error = err_x;
        PID_Data_Y.Error = err_y;
        Position_PID();
@@ -202,6 +206,7 @@ void Timer1IntHandler(void)
            PwmControl_1(channel_val_MID+PID_Data_X.PID_OUT);
        if(start_PID_Y)
            PwmControl_2(channel_val_MID+PID_Data_Y.PID_OUT);
+       UARTprintf("roll:%d\n pitch:%d\n",channel_val_MID+(int)PID_Data_X.PID_OUT,channel_val_MID+(int)PID_Data_Y.PID_OUT);
        if(start_PID_H)
        {
            if(Real_Distance < (Goal_Distance - 100))

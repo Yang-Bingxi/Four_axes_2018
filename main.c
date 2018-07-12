@@ -89,11 +89,17 @@ void HardwareConfig(void)
 extern uint16_t Real_XCoordinate,Real_YCoordinate;//申明坐标
 extern uint16_t Real_Distance,Real_Distance ;//申明高度
 extern uint8_t Control_Open;
+extern bool start_PID_X;
+extern bool start_PID_Y;
 extern bool start_PID_H;
 
 int main(void)
 
 {
+    bool Control_Open_Flag = true;
+    bool Coordinate_Open_Flag = true;
+
+
     FPULazyStackingEnable();
     FPUEnable();
 
@@ -101,21 +107,24 @@ int main(void)
     HardwareConfig();//硬件初始化
     Delay_ms(10);
     LED_Set(RED);
-
-
     OledDisplayInit();
-    //test
-    start_PID_H = true;
-    float a =0.1;
-    UARTprintf("%d\n",(int)(a*1000));
-    UARTprintf("kp:%d\n",(int)(1000*0.1));
     while(1)
     {
        //UARTprintf("Hello");//调试用
        // Real_Distance = GetAverageDistance();//获取高度在定时器中
-        if(Control_Open)
-            {UnlockPixhawk();LED_Set(GREEN);}
-
+        if(Control_Open&&Control_Open_Flag)
+        {
+            Control_Open_Flag = false;
+            UnlockPixhawk();
+            start_PID_H = true;
+            LED_Set(GREEN);
+        }
+        if(Real_Distance>300&&Control_Open&&Coordinate_Open_Flag)
+        {
+            Coordinate_Open_Flag = false;
+            start_PID_X = true;
+            start_PID_Y = true;
+        }
         Display();
         UARTprintf("RealDistance: %d\n",Real_Distance);
         UARTprintf("GoalDistance: %d\n",Goal_Distance);
