@@ -7,26 +7,18 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+
+#include "string.h"
 #include "inc/hw_ints.h"
 #include "inc/hw_memmap.h"
-#include "driverlib/debug.h"
-#include "driverlib/fpu.h"
-#include "driverlib/gpio.h"
-#include "driverlib/interrupt.h"
-#include "driverlib/pin_map.h"
-#include "driverlib/rom.h"
-#include "driverlib/rom_map.h"
-#include "driverlib/sysctl.h"
-#include "driverlib/uart.h"
+#include "head.h"
 #include "mavlink_recieve.h"
-#include "utils/uartstdio.h"
-#include <string.h>
-#include "inc/hw_types.h"
-#include "inc/hw_gpio.h"
-#include "driverlib/rom_map.h"
+#include "uart/uartstdio.h"
+#include "uart/uart.h"
+#include "driverlib/uart.h"
 
-
-
+bool calculate_Flag = false;
+extern uint16_t Real_Distance;
 
 uint8_t rx_buffer;  //缓存Mavlink接收串口的数据
 bool newAttiFlag = false;  //姿态更新标志
@@ -50,63 +42,27 @@ Rangefinder_Payload Source_Rangefinder_payload ;
 
 void calculate_test(void) ;
 void Mavlink_DateInit(void);
-//*****************************************************************************
+
+//int main(void)
+//{
+//	FPUEnable();
+//	FPULazyStackingEnable();
+//	//80M
+//	SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
+//	                       SYSCTL_XTAL_16MHZ);
 //
-// Configure the UART and its pins.  This must be called before UARTprintf().
+//   //
+//	ConfigureUART();
+//    UARTprintf("UART OK!%d");
+//	Mavlink_DateInit();//初始化存储，接收Mavlink的波特率设为57600
+//	IntMasterEnable();
 //
-//*****************************************************************************
-void
-ConfigureUART(void)
-{
-    //
-    // Enable the GPIO Peripheral used by the UART.
-    //
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
-
-    //
-    // Enable UART0
-    //
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
-
-    //
-    // Configure GPIO Pins for UART mode.
-    //
-    GPIOPinConfigure(GPIO_PA0_U0RX);
-    GPIOPinConfigure(GPIO_PA1_U0TX);
-    GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
-
-    //
-    // Use the internal 16MHz oscillator as the UART clock source.
-    //
-    UARTClockSourceSet(UART0_BASE, UART_CLOCK_PIOSC);
-
-    //
-    // Initialize the UART for console I/O.
-    //
-    UARTStdioConfig(0, 57600, 16000000);
-}
-
-
-int main(void)
-{
-	FPUEnable();
-	FPULazyStackingEnable();
-	//80M
-	SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
-	                       SYSCTL_XTAL_16MHZ);
-
-   //
-	ConfigureUART();
-    UARTprintf("UART OK!%d");
-	Mavlink_DateInit();//初始化存储，接收Mavlink的波特率设为57600
-	IntMasterEnable();
-
-
-	while(1)
-	{
-		calculate_test();
-	}
-}
+//
+//	while(1)
+//	{
+//		calculate_test();
+//	}
+//}
 
 void Mav_recive_UART2_Config(void)
 {
@@ -248,6 +204,7 @@ UART2IntHandler(void)
 
 void calculate_test(void)
 {
+    calculate_Flag = false;
     if(newAttiFlag)
     {
      newAttiFlag = false;
@@ -276,11 +233,10 @@ void calculate_test(void)
      newHeightFlag = false;
 	 distan = (Source_Rangefinder_payload.distance)*100;  //cm
 	 int_distance =(int)(distan);
-
-	 UARTprintf("\n int_distance= %d", int_distance);
+	 Real_Distance = int_distance*10;//转换成mm
+	 //UARTprintf("\n int_distance= %d\n", int_distance);
     }
-
-
+    calculate_Flag = true;
 }
 
 void Attitude_init (void)

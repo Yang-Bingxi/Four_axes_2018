@@ -9,8 +9,9 @@
 #include "timer.h"
 #include "Control/Control.h"
 #include "Pwm/pwm.h"
-
+#include "MavLink_Receive/mavlink_recieve.h"
 extern uint8_t Control_Open;
+extern bool calculate_Flag;
 
 PID_K PID_X;
 PID_K PID_Y;
@@ -168,7 +169,7 @@ void Position_PID(void)
         PID_Data_Y.PID_OUT = -(PID_Y.OUT_MAX);
     }
 }
-uint8_t t,i;
+uint8_t t;
 void Timer1IntHandler(void)
 {
     //
@@ -191,13 +192,9 @@ void Timer1IntHandler(void)
    //        else
    //            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
 
-       Get_Coordinate();//获取坐标值
-       if(i>200)
-       {
-           Get_Distance();//获取高度
-           i=0;
-       }
-       i++;
+       calculate_test();//获取高度(放在main中)
+       if(calculate_Flag)
+           UARTprintf("RealDistance:%d\n",Real_Distance);
        UARTprintf("RealDistance:%d\n",Real_Distance);
        UARTprintf("get_x:%d get_y:%d\n",get_x,get_y);
        err_x = (int)(Real_Distance/100 * (get_x - CAMERA_MID_X));

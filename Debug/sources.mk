@@ -116,6 +116,7 @@ SUBDIRS := \
 Beep \
 Control \
 Filter \
+MavLink_Receive \
 Pid \
 Pwm \
 Timer \

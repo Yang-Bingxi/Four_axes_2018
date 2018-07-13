@@ -16,6 +16,7 @@ ORDERED_OBJS += \
 "./Beep/Beep.obj" \
 "./Control/Control.obj" \
 "./Filter/filter.obj" \
+"./MavLink_Receive/Mavlink_test.obj" \
 "./Pid/pid.obj" \
 "./Pwm/pwm.obj" \
 "./Timer/Timer.obj" \
@@ -42,6 +43,7 @@ RMDIR := RMDIR /S/Q
 -include Beep/subdir_vars.mk
 -include Control/subdir_vars.mk
 -include Filter/subdir_vars.mk
+-include MavLink_Receive/subdir_vars.mk
 -include Pid/subdir_vars.mk
 -include Pwm/subdir_vars.mk
 -include Timer/subdir_vars.mk
@@ -55,6 +57,7 @@ RMDIR := RMDIR /S/Q
 -include Beep/subdir_rules.mk
 -include Control/subdir_rules.mk
 -include Filter/subdir_rules.mk
+-include MavLink_Receive/subdir_rules.mk
 -include Pid/subdir_rules.mk
 -include Pwm/subdir_rules.mk
 -include Timer/subdir_rules.mk
@@ -193,8 +196,8 @@ Four_axes_2018.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "0.96'OLED\OLED.obj" "Beep\Beep.obj" "Control\Control.obj" "Filter\filter.obj" "Pid\pid.obj" "Pwm\pwm.obj" "Timer\Timer.obj" "colorful_LED\colorful_LED.obj" "delay\delay.obj" "key\key.obj" "sonar\sonar.obj" "uart\uart_echo.obj" "uart\uartstdio.obj" 
-	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "0.96'OLED\OLED.d" "Beep\Beep.d" "Control\Control.d" "Filter\filter.d" "Pid\pid.d" "Pwm\pwm.d" "Timer\Timer.d" "colorful_LED\colorful_LED.d" "delay\delay.d" "key\key.d" "sonar\sonar.d" "uart\uart_echo.d" "uart\uartstdio.d" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "0.96'OLED\OLED.obj" "Beep\Beep.obj" "Control\Control.obj" "Filter\filter.obj" "MavLink_Receive\Mavlink_test.obj" "Pid\pid.obj" "Pwm\pwm.obj" "Timer\Timer.obj" "colorful_LED\colorful_LED.obj" "delay\delay.obj" "key\key.obj" "sonar\sonar.obj" "uart\uart_echo.obj" "uart\uartstdio.obj" 
+	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "0.96'OLED\OLED.d" "Beep\Beep.d" "Control\Control.d" "Filter\filter.d" "MavLink_Receive\Mavlink_test.d" "Pid\pid.d" "Pwm\pwm.d" "Timer\Timer.d" "colorful_LED\colorful_LED.d" "delay\delay.d" "key\key.d" "sonar\sonar.d" "uart\uart_echo.d" "uart\uartstdio.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

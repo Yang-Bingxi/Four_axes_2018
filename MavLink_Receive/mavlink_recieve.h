@@ -84,5 +84,6 @@ typedef struct MAVLINK_RANGEFINDER_PAYLOAD
 //void calculate_angle(void);
 //void  calculate_height(void);
 extern void Mavlink_DateInit(void);
+void calculate_test(void);
 
 #endif

@@ -446,9 +446,9 @@ void Uart1Iint(void)
 
 /*---------------------------------------------------------------Beautiful Line---------------------------------------------------------*/
 
-//UART2
-uint8_t ReciveData_UART2[16];
-uint8_t ReciveData_i_UART2 = 0;
+//UART3
+uint8_t ReciveData_UART3[16];
+uint8_t ReciveData_i_UART3 = 0;
 extern uint16_t Real_XCoordinate,Real_YCoordinate;
 
 //*****************************************************************************
@@ -457,24 +457,24 @@ extern uint16_t Real_XCoordinate,Real_YCoordinate;
 //
 //*****************************************************************************
 void
-UART2IntHandler(void)
+UART3IntHandler(void)
 {
     uint32_t ui32Status;
     //
     // Get the interrrupt status.
     //
-    ui32Status = UARTIntStatus(UART2_BASE, true);
+    ui32Status = UARTIntStatus(UART3_BASE, true);
 
     //
     // Clear the asserted interrupts.
     //
-    UARTIntClear(UART2_BASE, ui32Status);
+    UARTIntClear(UART3_BASE, ui32Status);
 
-    ReciveData_i_UART2 = 0;
+    ReciveData_i_UART3 = 0;
     //
     // Loop while there are characters in the receive FIFO.
     //
-    while(UARTCharsAvail(UART2_BASE))
+    while(UARTCharsAvail(UART3_BASE))
     {
         //
         // Read the next character from the UART and write it back to the UART.
@@ -482,8 +482,8 @@ UART2IntHandler(void)
         // UARTCharPutNonBlocking(UART1_BASE,
         // UARTCharGetNonBlocking(UART1_BASE));
 
-        ReciveData_UART2[ReciveData_i_UART2] = UARTCharGetNonBlocking(UART2_BASE);
-        ReciveData_i_UART2++;
+        ReciveData_UART3[ReciveData_i_UART3] = UARTCharGetNonBlocking(UART3_BASE);
+        ReciveData_i_UART3++;
         //
         // Blink the LED to show a character transfer is occuring.
         //
@@ -502,13 +502,13 @@ UART2IntHandler(void)
     }
 
  //   UARTSend()
-    UART2Send("Rec: ",4);
-    UART2Send(ReciveData_UART2, ReciveData_i_UART2);
+    UART3Send("Rec: ",4);
+    UART3Send(ReciveData_UART3, ReciveData_i_UART3);
 //参数获取
-    if(ReciveData_UART2[0]=='X'&&ReciveData_UART2[7]=='Y')
+    if(ReciveData_UART3[0]=='X'&&ReciveData_UART3[7]=='Y')
     {
-        Real_XCoordinate = (ReciveData_UART2[1]-48)*100+(ReciveData_UART2[2]-48)*10+(ReciveData_UART2[3]-48);
-        Real_YCoordinate = (ReciveData_UART2[4]-48)*100+(ReciveData_UART2[5]-48)*10+(ReciveData_UART2[6]-48);
+        Real_XCoordinate = (ReciveData_UART3[1]-48)*100+(ReciveData_UART3[2]-48)*10+(ReciveData_UART3[3]-48);
+        Real_YCoordinate = (ReciveData_UART3[4]-48)*100+(ReciveData_UART3[5]-48)*10+(ReciveData_UART3[6]-48);
     }
 }
 
@@ -519,7 +519,7 @@ UART2IntHandler(void)
 //
 //*****************************************************************************
 void
-UART2Send(uint8_t *pui8Buffer, uint32_t ui32Count)
+UART3Send(uint8_t *pui8Buffer, uint32_t ui32Count)
 {
     //
     // Loop while there are more characters to send.
@@ -529,7 +529,7 @@ UART2Send(uint8_t *pui8Buffer, uint32_t ui32Count)
         //
         // Write the next character to the UART.
         //
-        UARTCharPutNonBlocking(UART2_BASE, *pui8Buffer++);
+        UARTCharPutNonBlocking(UART3_BASE, *pui8Buffer++);
     }
 }
 
@@ -540,17 +540,14 @@ UART2Send(uint8_t *pui8Buffer, uint32_t ui32Count)
 // uart1 init
 //
 //*****************************************************************************
-void Uart2Iint(void)
+void UART3Iint(void)
 {
     //
      // Enable the peripherals used by this example.
      //
-     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
-     SysCtlPeripheralEnable(SYSCTL_PERIPH_UART2);
-     //ulock PD7
-     HWREG(GPIO_PORTD_BASE + GPIO_O_LOCK) = GPIO_LOCK_KEY;
-     HWREG(GPIO_PORTD_BASE + GPIO_O_CR) = 0xFF;
-     //
+     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOC);
+     SysCtlPeripheralEnable(SYSCTL_PERIPH_UART3);
+
      // Enable processor interrupts.
      //
      IntMasterEnable();
@@ -558,26 +555,26 @@ void Uart2Iint(void)
      //
      // Set GPIO B0 and B1 as UART pins.
      //
-     GPIOPinConfigure(GPIO_PD6_U2RX);
-     GPIOPinConfigure(GPIO_PD7_U2TX);
-     GPIOPinTypeUART(GPIO_PORTD_BASE, GPIO_PIN_6 | GPIO_PIN_7);
+     GPIOPinConfigure(GPIO_PC6_U3RX);
+     GPIOPinConfigure(GPIO_PC7_U3TX);
+     GPIOPinTypeUART(GPIO_PORTC_BASE, GPIO_PIN_6 | GPIO_PIN_7);
 
      //
      // Configure the UART for 115,200, 8-N-1 operation.
      //
-     UARTConfigSetExpClk(UART2_BASE, SysCtlClockGet(), 115200,
+     UARTConfigSetExpClk(UART3_BASE, SysCtlClockGet(), 115200,
                              (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
                               UART_CONFIG_PAR_NONE));
      //
      // Enable the UART interrupt.
      //
-     IntEnable(INT_UART2);
-     UARTIntEnable(UART2_BASE, UART_INT_RX | UART_INT_RT);
+     IntEnable(INT_UART3);
+     UARTIntEnable(UART3_BASE, UART_INT_RX | UART_INT_RT);
 
      //
      // Prompt for text to be entered.
      //
-     UART2Send((uint8_t *)"\n UART2 Is OK!!\n\n ", 17);
+     UART3Send((uint8_t *)"\n UART3 Is OK!!\n\n ", 17);
 }
 
 

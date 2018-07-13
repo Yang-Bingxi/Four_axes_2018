@@ -5,12 +5,8 @@
 程序说明:
 编程者: Young sw
 ********************************************/
-#include <0.96'OLED/bmp.h>
-#include <0.96'OLED/OLED.h>
-#include <0.96'OLED/OLED.h>
 #include <stdint.h>
 #include <stdbool.h>
-
 /**
   ******************************************************************************
   * 文件名程: main.c
@@ -55,13 +51,14 @@
 #include "Control/Control.h"
 #include "sonar.h"
 #include "key/key.h"
-
+#include "MavLink_Receive/mavlink_recieve.h"
+#include "0.96'OLED/OLED.h"
 
 void HardwareConfig(void)
 {
     Uart0Iint();        //串口0初始化
     Uart1Iint();        //串口1初始化
-    Uart2Iint();        //串口2初始化
+    UART3Iint();        //串口3初始化
 
     PwmConfig();            //初始化PWM
 
@@ -71,11 +68,10 @@ void HardwareConfig(void)
     OLED_Init();            //初始化OLED
     OLED_Clear();
     Delay_ms(5);            //延时等待OLED初始化
-    OLED_DrawBMP(0,0,128,8,BMP3);
 
-    Sonar_Configure();      //超声波初始化
-    Sonar_GPIOA_Configure();
-    Sonar_GPIOA_Interrupt();
+//    Sonar_Configure();      //超声波初始化
+//    Sonar_GPIOA_Configure();
+//    Sonar_GPIOA_Interrupt();
 
     Timer0_Config();    //定时器初始化
     Timer1_Config();
@@ -83,7 +79,10 @@ void HardwareConfig(void)
     Key_Configure();    //按键初始化
     Key_Interrupt();    //按键中断
 
+    Mavlink_DateInit();
+    IntMasterEnable();
     PID_Init();
+
 }
 
 extern uint16_t Real_XCoordinate,Real_YCoordinate;//申明坐标
@@ -126,11 +125,11 @@ int main(void)
             start_PID_X = true;
             start_PID_Y = true;
         }
-        //Get_Distance();
+        //calculate_test();
         Display();
         UARTprintf("RealDistance: %d\n",Real_Distance);
         UARTprintf("GoalDistance: %d\n",Goal_Distance);
         UARTprintf("x=%d,y=%d\n",Real_XCoordinate,Real_YCoordinate);
-        Delay_ms(500);
+        //Delay_ms(500);
     }
 }
