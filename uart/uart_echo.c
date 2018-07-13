@@ -8,10 +8,10 @@
   ******************************************************************************
   * 说明：
   * 硬件平台：
-  *   MCUc:TM4C123、2相四线步进电机、DRV8825电机驱动、WiFi
+  *   MCUc:TM4C123
   * 软件设计说明：
-  *   通过无线精确控制小车的前进、后退距离；左转右转角度。
-  * Github：https://github.com/youngsw/Remote_Control_Car_PointRace_3_Car
+  *
+  * Github：
   ******************************************************************************
 **/
 //*****************************************************************************
@@ -55,7 +55,7 @@
 #include "uart.h"
 #include "Timer/Timer.h"
 #include "head.h"
-
+#include "Control/Control.h"
 
 //*****************************************************************************
 //
@@ -73,7 +73,7 @@
 //UART0
 uint8_t ReciveData_UART0[16];
 uint8_t ReciveData_i_UART0 = 0;
-
+extern bool Control_Serial;
 
 //*****************************************************************************
 //
@@ -227,7 +227,7 @@ void Uart0Iint(void)
        //
        // Initialize the UART for console I/O.
        //
-       UARTStdioConfig(0, 115200, 16000000);
+       UARTStdioConfig(1, 115200, 16000000);
 
        UARTprintf("UART0 Is Ok!\n");
 
@@ -295,6 +295,13 @@ UART1IntHandler(void)
  //   UARTSend()
     UART1Send("Received: ",10);
     UART1Send(ReciveData_UART1, ReciveData_i_UART1);
+        if(ReciveData_UART1[0]=='S'&&ReciveData_UART1[1]=='T'&&ReciveData_UART1[2]=='O'&&ReciveData_UART1[3]=='P')
+        {
+            Control_Serial= false;
+            UARTprintf("Land\n");
+            LandMode();
+
+        }
 //    if(ReciveData_UART1[0]=='F')
 //    {
 //        Counter = 0; //计数清零

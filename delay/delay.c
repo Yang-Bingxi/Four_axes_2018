@@ -2,7 +2,7 @@
  * delay.c
  *
  *  Created on: 2017年10月4日
- *      Author: 79864
+ *      Author: Sw Young
  */
 /*推荐时钟配置 （5分频有问题）
     SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);

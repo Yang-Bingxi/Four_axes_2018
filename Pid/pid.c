@@ -1,9 +1,19 @@
-/*
- * pid.c
- *
- *  Created on: 2018年7月10日
- *      Author: Sw Young
- */
+/**
+  ******************************************************************************
+  * 文件名程: pid.c
+  * 作    者: By Sw Young
+  * 版    本: V1.0
+  * 功    能:
+  * 编写日期: 2018.7.6
+  ******************************************************************************
+  * 说明：
+  * 硬件平台：TM4C123G
+  *   *****
+  * 软件设计说明：
+  *   *****
+  * Github：
+  ******************************************************************************
+**/
 
 #include "pid.h"
 #include "timer.h"
@@ -12,6 +22,7 @@
 #include "MavLink_Receive/mavlink_recieve.h"
 extern uint8_t Control_Open;
 extern bool calculate_Flag;
+extern bool Control_Serial;
 
 PID_K PID_X;
 PID_K PID_Y;
@@ -170,6 +181,7 @@ void Position_PID(void)
     }
 }
 uint8_t t;
+uint8_t PrintNump[6];
 void Timer1IntHandler(void)
 {
     //
@@ -181,7 +193,7 @@ void Timer1IntHandler(void)
     // Update the interrupt status on the display.
     //
     TimerIntDisable(TIMER1_BASE, TIMER_A);
-    if(Control_Open)
+    if(Control_Open&&Control_Serial)
     {
     /*
         * test
@@ -193,21 +205,22 @@ void Timer1IntHandler(void)
    //            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
 
        calculate_test();//获取高度(放在main中)
-       if(calculate_Flag)
-           UARTprintf("RealDistance:%d\n",Real_Distance);
+//       if(calculate_Flag)
+//           UARTprintf("RealDistance:%d\n",Real_Distance);
        UARTprintf("RealDistance:%d\n",Real_Distance);
+       Get_Coordinate();//获取坐标值
        UARTprintf("get_x:%d get_y:%d\n",get_x,get_y);
        err_x = (int)(Real_Distance/100 * (get_x - CAMERA_MID_X));
        err_y = (int)(Real_Distance/100 * (get_y - CAMERA_MID_Y));
-       UARTprintf("get_x:%d get_y:%d\n",err_x,err_y);
+       UARTprintf("Err_x:%d Err_y:%d\n",err_x,err_y);
 
        PID_Data_X.Error = err_x;
        PID_Data_Y.Error = err_y;
        Position_PID();
        if(start_PID_X)
-           PwmControl_1(channel_val_MID+PID_Data_X.PID_OUT);
+           PwmControl_1((int)(channel_val_MID+(int)PID_Data_X.PID_OUT));
        if(start_PID_Y)
-           PwmControl_2(channel_val_MID+PID_Data_Y.PID_OUT);
+           PwmControl_2((int)(channel_val_MID+(int)PID_Data_Y.PID_OUT));
        UARTprintf("roll:%d\n pitch:%d\n",channel_val_MID+(int)PID_Data_X.PID_OUT,channel_val_MID+(int)PID_Data_Y.PID_OUT);
        if(start_PID_H)
        {
@@ -215,7 +228,7 @@ void Timer1IntHandler(void)
            {
                err_h = Goal_Distance-Real_Distance;
                //PwmControl_3(1600);//油门量60%//无pid调节
-               PwmControl_3(channel_val_MID+(int)(PID_H.Kp*err_h));
+               PwmControl_3((int)(channel_val_MID+(int)(PID_H.Kp*err_h)));
                UARTprintf("Throttle:%d\n",(channel_val_MID+(int)(PID_H.Kp*err_h)));
                UARTprintf("err_h:%d\n",err_h);
                UARTprintf("kp:%d\n",(int)(1000*PID_H.Kp));
@@ -225,7 +238,7 @@ void Timer1IntHandler(void)
            {
                err_h = Real_Distance-Goal_Distance;
                //PwmControl_3(1435);//油门量39%//无pid调节
-               PwmControl_3(channel_val_MID-(int)(PID_H.Kp*err_h));
+               PwmControl_3((int)(channel_val_MID-(int)(PID_H.Kp*err_h)));
                UARTprintf("Throttle:%d\n",channel_val_MID-(int)(PID_H.Kp*err_h));
                UARTprintf("err_h:%d\n",err_h);
                UARTprintf("kp:%d\n",(int)(1000*PID_H.Kp));
@@ -233,7 +246,7 @@ void Timer1IntHandler(void)
            else if((Real_Distance-Goal_Distance<100)||(Goal_Distance-Real_Distance<100))//调节死区 -100 ~ +100
            {
                //set_ppm(0,0,channel_percent(50),0,0,0);
-               PwmControl_3(channel_val_MID-(int)(0*err_h));
+               PwmControl_3(channel_val_MID);
                UARTprintf("Throttle:%d\n",channel_val_MID+(int)(PID_H.Kp*0));
                UARTprintf("err_h:%d\n",err_h);
                UARTprintf("kp:%d\n",(int)(1000*PID_H.Kp));

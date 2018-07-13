@@ -41,6 +41,7 @@ uart/uart_echo.obj: F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h
 uart/uart_echo.obj: F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h
 uart/uart_echo.obj: F:/ProjectFile/ccs/Four_axes_2018/sonar/sonar.h
 uart/uart_echo.obj: F:/ProjectFile/ccs/Four_axes_2018/head.h
+uart/uart_echo.obj: F:/ProjectFile/ccs/Four_axes_2018/Control/Control.h
 
 ../uart/uart_echo.c: 
 D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/stdint.h: 
@@ -83,3 +84,4 @@ F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h:
 F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h: 
 F:/ProjectFile/ccs/Four_axes_2018/sonar/sonar.h: 
 F:/ProjectFile/ccs/Four_axes_2018/head.h: 
+F:/ProjectFile/ccs/Four_axes_2018/Control/Control.h: 

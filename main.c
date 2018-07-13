@@ -1,10 +1,19 @@
-/*******************************************
-开发坏境:CCSv7.0
-开发板:TIVA C Launchpad(TM4C123GH6PM)
-程序功能:四轴飞行器主控
-程序说明:
-编程者: Young sw
-********************************************/
+/**
+  ******************************************************************************
+  * 文件名程: main.c
+  * 作    者: By Sw Young
+  * 版    本: V1.0
+  * 功    能:
+  * 编写日期: 2018.7.6
+  ******************************************************************************
+  * 说明：
+  * 硬件平台：TM4C123G
+  *   *****
+  * 软件设计说明：
+  *   *****
+  * Github：
+  ******************************************************************************
+**/
 #include <stdint.h>
 #include <stdbool.h>
 /**
@@ -23,6 +32,7 @@
   * Github：
   ******************************************************************************
 **/
+
 #include <stdint.h>
 #include <stdbool.h>
 #include "stdio.h"
@@ -54,6 +64,15 @@
 #include "MavLink_Receive/mavlink_recieve.h"
 #include "0.96'OLED/OLED.h"
 
+/**
+  * 函 数 名:HardwareConfig
+  * 函数功能: 硬件初始化
+  * 输入参数: 无
+  * 返 回 值: 无
+  * 说    明: 无
+  *   By Sw Young
+  *   2017.7.6
+  */
 void HardwareConfig(void)
 {
     Uart0Iint();        //串口0初始化
@@ -91,23 +110,28 @@ extern uint8_t Control_Open;
 extern bool start_PID_X;
 extern bool start_PID_Y;
 extern bool start_PID_H;
-
+/**
+  * 函 数 名:Main
+  * 函数功能: 主函数
+  * 输入参数: 无
+  * 返 回 值: 无
+  * 说    明: 无
+  *   By Sw Young
+  *   2017.7.6
+  */
 int main(void)
-
-
 {
-    bool Control_Open_Flag = true;
-    bool Coordinate_Open_Flag = true;
+    bool Control_Open_Flag = true;//系统控制标志位，通过按键打开，一次有效
+    bool Coordinate_Open_Flag = true;//X、Y方向pid调节标志，一次有效
 
-
+    FPUEnable();        //开启浮点运算
     FPULazyStackingEnable();
-    FPUEnable();
 
     SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN); //主频设置80M
-    HardwareConfig();//硬件初始化
-    Delay_ms(10);
-    LED_Set(RED);
-    OledDisplayInit();
+    HardwareConfig();   //硬件初始化
+    Delay_ms(10);       //延时等待硬件初始化
+    LED_Set(RED);       //设置LED指示灯
+    OledDisplayInit();  //初始化OLED显示界面
     while(1)
     {
        //UARTprintf("Hello");//调试用
@@ -130,6 +154,6 @@ int main(void)
         UARTprintf("RealDistance: %d\n",Real_Distance);
         UARTprintf("GoalDistance: %d\n",Goal_Distance);
         UARTprintf("x=%d,y=%d\n",Real_XCoordinate,Real_YCoordinate);
-        //Delay_ms(500);
+        Delay_ms(500);
     }
 }

@@ -1,9 +1,19 @@
-/*
- * Control.c
- *
- *  Created on: 2018年7月10日
- *      Author: Sw Young
- */
+/**
+  ******************************************************************************
+  * 文件名程: contral.c
+  * 作    者: By Sw Young
+  * 版    本: V1.0
+  * 功    能:
+  * 编写日期: 2018.7.6
+  ******************************************************************************
+  * 说明：
+  * 硬件平台：TM4C123G
+  *   *****
+  * 软件设计说明：
+  *   *****
+  * Github：
+  ******************************************************************************
+**/
 #include <0.96'OLED/OLED.h>
 #include <0.96'OLED/OLED.h>
 #include "head.h"
@@ -28,6 +38,7 @@ uint16_t Real_XCoordinate,Real_YCoordinate;
 extern volatile uint8_t get_x, get_y;
 
 uint8_t Control_Open = 0;
+bool Control_Serial = true;
 
 /*遥控器校准值
  *CH1 1100-1950
@@ -62,7 +73,7 @@ void UnlockPixhawk(void)
 void LockPixhawk(void)
 {
     PwmControl_3(1100);
-    PwmControl_4(1950);//上锁
+    PwmControl_4(1100);//上锁
     Delay_ms(1000);
     Delay_ms(1000);
     Delay_ms(1000);
@@ -81,11 +92,11 @@ void Get_Coordinate(void)
     get_x = Real_XCoordinate;
     get_y = Real_YCoordinate;
 }
-void Get_Distance(void)
+void Get_Distance(void)//舍弃
 {
     Real_Distance = GetAverageDistance();
 }
-void AltitudeHold(void)
+void AltitudeHold(void)//舍弃
 {
     Real_Distance = GetAverageDistance();
     if(Real_Distance>Goal_Distance)
