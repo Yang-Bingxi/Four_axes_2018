@@ -168,7 +168,7 @@ void Position_PID(void)
         PID_Data_Y.PID_OUT = -(PID_Y.OUT_MAX);
     }
 }
-uint8_t t;
+uint8_t t,i;
 void Timer1IntHandler(void)
 {
     //
@@ -192,7 +192,12 @@ void Timer1IntHandler(void)
    //            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
 
        Get_Coordinate();//获取坐标值
-       Get_Distance();//获取高度
+       if(i>200)
+       {
+           Get_Distance();//获取高度
+           i=0;
+       }
+       i++;
        UARTprintf("RealDistance:%d\n",Real_Distance);
        UARTprintf("get_x:%d get_y:%d\n",get_x,get_y);
        err_x = (int)(Real_Distance/100 * (get_x - CAMERA_MID_X));

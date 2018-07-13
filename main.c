@@ -95,6 +95,7 @@ extern bool start_PID_H;
 
 int main(void)
 
+
 {
     bool Control_Open_Flag = true;
     bool Coordinate_Open_Flag = true;
@@ -111,7 +112,7 @@ int main(void)
     while(1)
     {
        //UARTprintf("Hello");//调试用
-       // Real_Distance = GetAverageDistance();//获取高度在定时器中
+       // Re al_Distance = GetAverageDistance();//获取高度在定时器中
         if(Control_Open&&Control_Open_Flag)
         {
             Control_Open_Flag = false;
@@ -125,6 +126,7 @@ int main(void)
             start_PID_X = true;
             start_PID_Y = true;
         }
+        //Get_Distance();
         Display();
         UARTprintf("RealDistance: %d\n",Real_Distance);
         UARTprintf("GoalDistance: %d\n",Goal_Distance);
