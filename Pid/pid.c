@@ -205,6 +205,7 @@ void Timer1IntHandler(void)
    //            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
 
        calculate_test();//获取高度(放在main中)
+       AttitudeProtection();
 //       if(calculate_Flag)
 //           UARTprintf("RealDistance:%d\n",Real_Distance);
        UARTprintf("RealDistance:%d\n",Real_Distance);

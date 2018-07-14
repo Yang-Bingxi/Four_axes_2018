@@ -13,6 +13,9 @@ main.obj: D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/incl
 main.obj: D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/_ti_config.h
 main.obj: D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/linkage.h
 main.obj: D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/stdarg.h
+main.obj: D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/math.h
+main.obj: D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/_defs.h
+main.obj: D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/machine/_limits.h
 main.obj: D:/ti/TivaWare_C_Series-2.1.4.178/inc/hw_types.h
 main.obj: D:/ti/TivaWare_C_Series-2.1.4.178/inc/hw_memmap.h
 main.obj: D:/ti/TivaWare_C_Series-2.1.4.178/inc/hw_gpio.h
@@ -27,9 +30,6 @@ main.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/pwm.h
 main.obj: ../colorful_LED/colorful_LED.h
 main.obj: ../Pwm/pwm.h
 main.obj: F:/ProjectFile/ccs/Four_axes_2018/head.h
-main.obj: D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/math.h
-main.obj: D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/_defs.h
-main.obj: D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/machine/_limits.h
 main.obj: D:/ti/TivaWare_C_Series-2.1.4.178/grlib/grlib.h
 main.obj: D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h
 main.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h
@@ -61,6 +61,9 @@ D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/stdio.
 D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/_ti_config.h: 
 D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/linkage.h: 
 D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/stdarg.h: 
+D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/math.h: 
+D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/_defs.h: 
+D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/machine/_limits.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/inc/hw_types.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/inc/hw_memmap.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/inc/hw_gpio.h: 
@@ -75,9 +78,6 @@ D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/pwm.h:
 ../colorful_LED/colorful_LED.h: 
 ../Pwm/pwm.h: 
 F:/ProjectFile/ccs/Four_axes_2018/head.h: 
-D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/math.h: 
-D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/_defs.h: 
-D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/machine/_limits.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/grlib/grlib.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h: 

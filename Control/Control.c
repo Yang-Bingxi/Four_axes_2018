@@ -33,6 +33,12 @@ uint16_t Goal_Distance = 800;//默认定高值800mm
 uint16_t Real_Distance = 0;
 uint16_t Error_Distance = 0;
 
+int16_t RealAttitude_roll;
+int16_t RealAttitude_pitch;
+int16_t RealAttitude_yaw;
+
+uint16_t err_roll=0,err_pitch=0;
+
 uint16_t Goal_XCoordinate,Goal_YCoordinate;
 uint16_t Real_XCoordinate,Real_YCoordinate;
 extern volatile uint8_t get_x, get_y;
@@ -124,4 +130,14 @@ void Display(void)
     OLED_ShowString(6,6,"GoalDis:",16);
     OLED_ShowNum(56,6,Goal_Distance,4,16);
     OLED_ShowString(88,6,"MM",16);
+}
+void AttitudeProtection(void)
+{
+    err_roll=fabs(RealAttitude_roll);
+    err_pitch=fabs(RealAttitude_pitch);
+    if(err_pitch>38||err_roll>38)
+    {
+        Control_Open = false;
+        LandMode();
+    }
 }

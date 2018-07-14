@@ -45,6 +45,15 @@ void BeepPwmInit (void)
     //使能PWM发生器
     PWMGenDisable(PWM0_BASE, PWM_GEN_0);
 }
+/**
+  * 函 数 名:PwmConfig
+  * 函数功能: pwm初始化
+  * 输入参数: 无
+  * 返 回 值: 无
+  * 说    明: 无
+  *   By Sw Young
+  *   2017.7.6
+  */
 void PwmConfig(void)
 {
     SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM0);//使能PWM0模块

@@ -36,6 +36,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "stdio.h"
+#include "math.h"
 
 #include "inc/hw_types.h"
 #include "inc/hw_memmap.h"
@@ -87,7 +88,9 @@ void HardwareConfig(void)
     OLED_Init();            //初始化OLED
     OLED_Clear();
     Delay_ms(5);            //延时等待OLED初始化
-
+/*
+ * 更换
+ */
 //    Sonar_Configure();      //超声波初始化
 //    Sonar_GPIOA_Configure();
 //    Sonar_GPIOA_Interrupt();
@@ -105,7 +108,13 @@ void HardwareConfig(void)
 }
 
 extern uint16_t Real_XCoordinate,Real_YCoordinate;//申明坐标
-extern uint16_t Real_Distance,Real_Distance ;//申明高度
+extern uint16_t Goal_Distance,\
+                Real_Distance;
+extern int16_t  RealAttitude_roll,\
+                RealAttitude_pitch,\
+                RealAttitude_yaw;//申明参数
+extern uint16_t err_roll,err_pitch;
+
 extern uint8_t Control_Open;
 extern bool start_PID_X;
 extern bool start_PID_Y;
@@ -149,11 +158,13 @@ int main(void)
             start_PID_X = true;
             start_PID_Y = true;
         }
-        //calculate_test();
+        calculate_test();
         Display();
         UARTprintf("RealDistance: %d\n",Real_Distance);
         UARTprintf("GoalDistance: %d\n",Goal_Distance);
         UARTprintf("x=%d,y=%d\n",Real_XCoordinate,Real_YCoordinate);
+        UARTprintf("Roll: %d;pitch: %d;yaw:%d\n",RealAttitude_roll,RealAttitude_pitch,RealAttitude_yaw);
+        UARTprintf("err_roll:%d;err_pitch%d;\n",err_roll=fabs(RealAttitude_roll),err_pitch=fabs(RealAttitude_pitch));
         Delay_ms(500);
     }
 }
