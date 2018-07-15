@@ -25,6 +25,10 @@ extern uint8_t Control_Open;
 extern bool calculate_Flag;
 extern bool Control_Serial;
 
+extern float volatile  Real_Distance,Last_Real_Distance;
+extern int int_distance;
+extern uint16_t  Goal_Distance;//默认定高值800mm
+
 PID_K PID_X;
 PID_K PID_Y;
 PID_K PID_H;
@@ -206,7 +210,8 @@ void Timer1IntHandler(void)
    //        else
    //            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
 
-       calculate_test();//获取高度
+       //calculate_test();//获取高度
+       Get_Distance();//获取高度
        AttitudeProtection();
 //       if(calculate_Flag)
 //           UARTprintf("RealDistance:%d\n",Real_Distance);
@@ -225,33 +230,9 @@ void Timer1IntHandler(void)
        if(start_PID_Y)
            PwmControl_2((int)(channel_val_MID+(int)PID_Data_Y.PID_OUT));
        UARTprintf("roll:%d\n pitch:%d\n",channel_val_MID+(int)PID_Data_X.PID_OUT,channel_val_MID+(int)PID_Data_Y.PID_OUT);
-       if(start_PID_H)
+       if(start_PID_H)//高度调节
        {
-           if((int)Real_Distance < (Goal_Distance - 100))
-           {
-               err_h = Goal_Distance-(int)Real_Distance;
-               //PwmControl_3(1600);//油门量60%//无pid调节
-               PwmControl_3((int)(channel_val_MID+(int)(PID_H.Kp*err_h)));
-               UARTprintf("Throttle:%d\n",(channel_val_MID+(int)(PID_H.Kp*err_h)));
-               UARTprintf("err_h:%d\n",err_h);
-               UARTprintf("kp:%d\n",(int)(1000*PID_H.Kp));
-
-           }
-           else if((int)Real_Distance > (Goal_Distance + 100))
-           {
-               err_h = (int)Real_Distance-Goal_Distance;
-               PwmControl_3((int)(channel_val_MID-(int)(PID_H.Kp*err_h)));
-               UARTprintf("Throttle:%d\n",channel_val_MID-(int)(PID_H.Kp*err_h));
-               UARTprintf("err_h:%d\n",err_h);
-               UARTprintf("kp:%d\n",(int)(1000*PID_H.Kp));
-           }
-           else if(((int)Real_Distance-Goal_Distance<100)||(Goal_Distance-(int)Real_Distance<100))//调节死区 -100 ~ +100
-           {
-               PwmControl_3(channel_val_MID);
-               UARTprintf("Throttle:%d\n",channel_val_MID+(int)(PID_H.Kp*0));
-               UARTprintf("err_h:%d\n",err_h);
-               UARTprintf("kp:%d\n",(int)(1000*PID_H.Kp));
-           }
+           AltitudeHold();
        }
     }
 

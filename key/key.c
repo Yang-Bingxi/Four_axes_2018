@@ -21,7 +21,8 @@ uint32_t ReadPin0;
 uint32_t ReadPin4;
 int KeyPress4=0;
 extern uint8_t Control_Open;
-
+extern float volatile Real_Distance ;
+extern uint16_t  Goal_Distance;//默认定高值800mm
 void Key_Configure(void)
 {
     //使能GPIO外设

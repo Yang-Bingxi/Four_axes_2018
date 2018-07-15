@@ -95,8 +95,10 @@ void HardwareConfig(void)
 //    Sonar_GPIOA_Configure();
 //    Sonar_GPIOA_Interrupt();
 
-    Timer0_Config();    //定时器初始化
+    //Timer0_Config();    //定时器初始化
     Timer1_Config();
+    Timer2_Config();
+
 
     Key_Configure();    //按键初始化
     Key_Interrupt();    //按键中断
@@ -109,7 +111,7 @@ void HardwareConfig(void)
 
 extern uint16_t Real_XCoordinate,Real_YCoordinate;//申明坐标
 extern uint16_t Goal_Distance;
-extern float    Real_Distance;
+extern float volatile Real_Distance;
 extern int16_t  RealAttitude_roll,\
                 RealAttitude_pitch,\
                 RealAttitude_yaw;//申明参数
@@ -152,12 +154,12 @@ int main(void)
             start_PID_H = true;
             LED_Set(GREEN);
         }
-        if(Real_Distance>300&&Control_Open&&Coordinate_Open_Flag)
-        {
-            Coordinate_Open_Flag = false;
-            start_PID_X = true;
-            start_PID_Y = true;
-        }
+//        if(Real_Distance>300&&Control_Open&&Coordinate_Open_Flag)
+//        {
+//            Coordinate_Open_Flag = false;
+//            start_PID_X = true;
+//            start_PID_Y = true;
+//        }
         calculate_test();
         Display();
         UARTprintf("RealDistance: %d\n",(int)Real_Distance);

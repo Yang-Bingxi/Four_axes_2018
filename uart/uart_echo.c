@@ -297,9 +297,9 @@ UART1IntHandler(void)
     UART1Send(ReciveData_UART1, ReciveData_i_UART1);
         if(ReciveData_UART1[0]=='S'&&ReciveData_UART1[1]=='T'&&ReciveData_UART1[2]=='O'&&ReciveData_UART1[3]=='P')
         {
+            LandMode();
             Control_Serial= false;
             UARTprintf("Land\n");
-            LandMode();
 
         }
 //    if(ReciveData_UART1[0]=='F')

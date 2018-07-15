@@ -37,13 +37,14 @@ bool newAttiFlag = false;  //姿态更新标志
 bool newHeightFlag = false;//高度更新标志
 
 //缓存数组
-uint8_t Rx_Buffer_attitude[40] = {0};
-uint8_t start_receive_attitude = 0;
-uint8_t Rx_Buffer_height[20]= {0};
-uint8_t start_receive_height =0;
+uint8_t static Rx_Buffer_attitude[40] = {0};
+uint8_t static start_receive_attitude = 0;
+uint8_t static Rx_Buffer_height[20]= {0};
+uint8_t static start_receive_height =0;
 
-int16_t int_pitch ,int_roll ,int_yaw,int_distance;
-float pitch ,roll , yaw ,distan;
+int16_t static int_pitch ,int_roll ,int_yaw;
+int int_distance;
+float static pitch ,roll , yaw ,distan;
 
 #define PAYLOAD_BUF_NUM 2          //姿态信息的数组的维度
 static uint8_t payload_buf_index ; //姿态信息的数组的索引值
@@ -54,27 +55,6 @@ Rangefinder_Payload Source_Rangefinder_payload ;
 
 void calculate_test(void) ;
 void Mavlink_DateInit(void);
-
-//int main(void)
-//{
-//	FPUEnable();
-//	FPULazyStackingEnable();
-//	//80M
-//	SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
-//	                       SYSCTL_XTAL_16MHZ);
-//
-//   //
-//	ConfigureUART();
-//    UARTprintf("UART OK!%d");
-//	Mavlink_DateInit();//初始化存储，接收Mavlink的波特率设为57600
-//	IntMasterEnable();
-//
-//
-//	while(1)
-//	{
-//		calculate_test();
-//	}
-//}
 
 void Mav_recive_UART2_Config(void)
 {
@@ -216,7 +196,7 @@ UART2IntHandler(void)
 
 void calculate_test(void)
 {
-    calculate_Flag = false;
+    //calculate_Flag = false;
     if(newAttiFlag)
     {
      newAttiFlag = false;
@@ -248,10 +228,10 @@ void calculate_test(void)
      newHeightFlag = false;
 	 distan = (Source_Rangefinder_payload.distance)*100;  //cm
 	 int_distance =(int)(distan);
-	 Real_Distance = int_distance*10;//转换成mm
+	 //Real_Distance = int_distance*10;//转换成mm
 	 //UARTprintf("\n int_distance= %d\n", int_distance);
     }
-    calculate_Flag = true;
+    //calculate_Flag = true;
 }
 
 void Attitude_init (void)

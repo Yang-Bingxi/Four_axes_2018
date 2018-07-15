@@ -15,7 +15,7 @@
   ******************************************************************************
 **/
 #include "timer.h"
-
+#include "MavLink_Receive/mavlink_recieve.h"
 
 char Time_Flag = 0;
 uint32_t Counter = 0;
@@ -129,4 +129,47 @@ void Timer1_Config(void)
 /*
  * 定时器1的中断服务函数在PID.C中
  */
+void Timer2_Config(void)
+{
+       //
+       // Enable the peripherals used by this example.
+       //
+        SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER2);
+       //
+       // Enable processor interrupts.
+       //
+        IntMasterEnable();
 
+       //
+       // Configure the two 32-bit periodic timers.
+       //
+        TimerConfigure(TIMER2_BASE, TIMER_CFG_PERIODIC);
+
+        TimerLoadSet(TIMER2_BASE, TIMER_A,  800000); //Fre = 主频/800000 = 100HZ
+
+       //
+       // Setup the interrupts for the timer timeouts.
+       //
+        IntEnable(INT_TIMER2A);
+
+        TimerIntEnable(TIMER2_BASE, TIMER_TIMA_TIMEOUT);
+       //
+       // Enable the timers.
+       //
+        TimerEnable(TIMER2_BASE, TIMER_A);
+}
+uint8_t i=0;
+void Timer2IntHandler(void)
+{
+    uint32_t ui32IntStatus;
+    ui32IntStatus = TimerIntStatus(TIMER2_BASE, true);
+    TimerIntClear(TIMER2_BASE, ui32IntStatus);//清除中断标志位
+
+    calculate_test();//读取MavLink参数
+
+    i=~i;
+    if(i)
+        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, GPIO_PIN_1);
+    else
+        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
+}

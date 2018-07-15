@@ -29,8 +29,9 @@
  * 参数初始化
  */
 //高度:单位 MM
-uint16_t Goal_Distance = 800;//默认定高值800mm
-float Real_Distance = 0;
+uint16_t Goal_Distance = 500;//默认定高值800mm
+float volatile Real_Distance = 0,Last_Real_Distance = 0;
+extern int int_distance;
 uint16_t Error_Distance = 0;
 
 int16_t RealAttitude_roll;
@@ -143,9 +144,12 @@ void Get_Coordinate(void)
   *   By Sw Young
   *   2017.7.6
   */
-void Get_Distance(void)//舍弃
+void Get_Distance(void)
 {
-    Real_Distance = GetAverageDistance();
+    Real_Distance = int_distance*10;//转换成mm
+    if(fabs(Real_Distance-Last_Real_Distance)>300)
+        Real_Distance = Last_Real_Distance;
+    Last_Real_Distance = Real_Distance;
 }
 /**
   * 函 数 名:AltitudeHold
@@ -158,11 +162,38 @@ void Get_Distance(void)//舍弃
   */
 void AltitudeHold(void)//舍弃
 {
-    Real_Distance = GetAverageDistance();
-    if(Real_Distance>Goal_Distance)
-        Error_Distance = Real_Distance-Goal_Distance;
-    else if(Goal_Distance>Real_Distance)
-        Error_Distance = Goal_Distance-Real_Distance;
+    //低于目标高度
+    if(Goal_Distance-(int)Real_Distance > 100&&Goal_Distance-(int)Real_Distance <300)
+    {
+       PwmControl_3(1635);
+    }
+    else if(Goal_Distance-(int)Real_Distance > 300&&Goal_Distance-(int)Real_Distance <500)
+    {
+       PwmControl_3(1660);
+    }
+    else if(Goal_Distance-(int)Real_Distance > 500)
+    {
+       PwmControl_3(1690);
+    }
+    //高于目标高度
+    else if((int)Real_Distance - Goal_Distance > 100&&(int)Real_Distance - Goal_Distance < 300)
+    {
+       PwmControl_3(1420);
+    }
+    else if((int)Real_Distance - Goal_Distance > 300&&(int)Real_Distance - Goal_Distance < 500)
+    {
+       PwmControl_3(1390);
+    }
+    else if((int)Real_Distance - Goal_Distance > 500)
+    {
+       PwmControl_3(1350);
+    }
+    //死区内
+    else if((((int)Real_Distance-Goal_Distance<100)&&((int)Real_Distance-Goal_Distance>0))\
+           ||((Goal_Distance-(int)Real_Distance<100)&&Goal_Distance-(int)Real_Distance>0))//调节死区 -100 ~ +100
+    {
+       PwmControl_3(channel_val_MID);
+    }
 }
 /**
   * 函 数 名:OledDisplayInit

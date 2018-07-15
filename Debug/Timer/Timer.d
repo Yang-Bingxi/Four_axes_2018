@@ -37,6 +37,7 @@ Timer/Timer.obj: F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h
 Timer/Timer.obj: F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h
 Timer/Timer.obj: F:/ProjectFile/ccs/Four_axes_2018/sonar/sonar.h
 Timer/Timer.obj: F:/ProjectFile/ccs/Four_axes_2018/head.h
+Timer/Timer.obj: F:/ProjectFile/ccs/Four_axes_2018/MavLink_Receive/mavlink_recieve.h
 
 ../Timer/Timer.c: 
 ../Timer/timer.h: 
@@ -75,3 +76,4 @@ F:/ProjectFile/ccs/Four_axes_2018/Filter/filter.h:
 F:/ProjectFile/ccs/Four_axes_2018/Pid/pid.h: 
 F:/ProjectFile/ccs/Four_axes_2018/sonar/sonar.h: 
 F:/ProjectFile/ccs/Four_axes_2018/head.h: 
+F:/ProjectFile/ccs/Four_axes_2018/MavLink_Receive/mavlink_recieve.h: 
