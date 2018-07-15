@@ -34,7 +34,15 @@
 #include "driverlib/pwm.h"
 #include "delay/delay.h"
 #include "colorful_LED.h"
-
+/**
+  * 函 数 名:LED_ColorInit
+  * 函数功能: 彩灯初始化（PWM控制）
+  * 输入参数: 无
+  * 返 回 值: 无
+  * 说    明: 无
+  *   By Sw Young
+  *   2017.7.6
+  */
 void LED_ColorInit(void)
 {
     // PWM时钟配置：4分频
@@ -65,19 +73,45 @@ void LED_ColorInit(void)
     PWMGenEnable(PWM1_BASE,PWM_GEN_3);
 
 }
+/**
+  * 函 数 名:LED_Color
+  * 函数功能: 颜色控制函数
+  * 输入参数: 所需颜色的RGB值
+  * 返 回 值: 无
+  * 说    明: 无
+  *   By Sw Young
+  *   2017.7.6
+  */
 void LED_Color(uint8_t r,uint8_t g,uint8_t b)
 {
     PWMPulseWidthSet(PWM1_BASE, PWM_OUT_5, r*100);
     PWMPulseWidthSet(PWM1_BASE, PWM_OUT_6, g*100);
     PWMPulseWidthSet(PWM1_BASE, PWM_OUT_7, b*100);
 }
-
+/**
+  * 函 数 名:LED_Config
+  * 函数功能: LED初始化（高低电平控制）
+  * 输入参数: 无
+  * 返 回 值: 无
+  * 说    明: 无
+  *   By Sw Young
+  *   2017.7.6
+  */
 void LED_Config(void)
 {
         SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
         GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3);
         GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 0);
 }
+/**
+  * 函 数 名:LED_Set
+  * 函数功能: LED颜色设置
+  * 输入参数: 无
+  * 返 回 值: 无
+  * 说    明: 无
+  *   By Sw Young
+  *   2017.7.6
+  */
 void LED_Set(uint8_t color)
 {
     if(color==0)//红
@@ -129,6 +163,15 @@ void LED_Set(uint8_t color)
         GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3, 0);
     }
 }
+/**
+  * 函 数 名:Led_Twinkle
+  * 函数功能:   LED闪烁函数
+  * 输入参数: 颜色、闪烁次数
+  * 返 回 值: 无
+  * 说    明: 无
+  *   By Sw Young
+  *   2017.7.6
+  */
 void Led_Twinkle(uint8_t color,uint8_t times)
 {
     uint8_t t=0;

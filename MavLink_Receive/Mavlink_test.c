@@ -28,10 +28,10 @@
 #include "driverlib/uart.h"
 
 bool calculate_Flag = false;
-extern uint16_t Real_Distance;
-extern int16_t RealAttitude_roll;
-extern int16_t RealAttitude_pitch;
-extern int16_t RealAttitude_yaw;
+extern float    Real_Distance;
+extern int16_t  RealAttitude_roll;
+extern int16_t  RealAttitude_pitch;
+extern int16_t  RealAttitude_yaw;
 uint8_t rx_buffer;  //缓存Mavlink接收串口的数据
 bool newAttiFlag = false;  //姿态更新标志
 bool newHeightFlag = false;//高度更新标志

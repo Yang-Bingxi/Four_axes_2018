@@ -30,7 +30,7 @@
  */
 //高度:单位 MM
 uint16_t Goal_Distance = 800;//默认定高值800mm
-uint16_t Real_Distance = 0;
+float Real_Distance = 0;
 uint16_t Error_Distance = 0;
 
 int16_t RealAttitude_roll;
@@ -53,6 +53,15 @@ bool Control_Serial = true;
  *CH4 1100-1950
  *CH5 1100(自稳)-1520(定高)-1950(降落)
  */
+/**
+  * 函 数 名:UnlockPixhawk
+  * 函数功能: Pixhawk解锁函数
+  * 输入参数:
+  * 返 回 值: 无
+  * 说    明: 无
+  *   By Sw Young
+  *   2017.7.6
+  */
 void UnlockPixhawk(void)
 {
     PwmControl_1(1520);
@@ -76,6 +85,15 @@ void UnlockPixhawk(void)
     PwmControl_5(1520); //定高模式
 
 }
+/**
+  * 函 数 名:LockPixhawk
+  * 函数功能: Pixhawk上锁函数函数
+  * 输入参数:
+  * 返 回 值: 无
+  * 说    明: 无
+  *   By Sw Young
+  *   2017.7.6
+  */
 void LockPixhawk(void)
 {
     PwmControl_3(1100);
@@ -85,6 +103,15 @@ void LockPixhawk(void)
     Delay_ms(1000);
     PwmControl_4(1520);
 }
+/**
+  * 函 数 名:LandMode
+  * 函数功能: 飞行器降落模式函数
+  * 输入参数:
+  * 返 回 值: 无
+  * 说    明: 无
+  *   By Sw Young
+  *   2017.7.6
+  */
 void LandMode(void)
 {
     PwmControl_5(1950); //降落模式
@@ -93,15 +120,42 @@ void LandMode(void)
     PwmControl_3(1100);
     PwmControl_4(1520);
 }
+/**
+  * 函 数 名:Led_Twinkle
+  * 函数功能:   LED闪烁函数
+  * 输入参数: 颜色、闪烁次数
+  * 返 回 值: 无
+  * 说    明: 无
+  *   By Sw Young
+  *   2017.7.6
+  */
 void Get_Coordinate(void)
 {
     get_x = Real_XCoordinate;
     get_y = Real_YCoordinate;
 }
+/**
+  * 函 数 名:Get_Distance
+  * 函数功能: 获取飞行器高度函数
+  * 输入参数:
+  * 返 回 值: 无
+  * 说    明: 无
+  *   By Sw Young
+  *   2017.7.6
+  */
 void Get_Distance(void)//舍弃
 {
     Real_Distance = GetAverageDistance();
 }
+/**
+  * 函 数 名:AltitudeHold
+  * 函数功能: 自稳模式飞行
+  * 输入参数:
+  * 返 回 值: 无
+  * 说    明: 舍弃（飞行模式控制移至pid）
+  *   By Sw Young
+  *   2017.7.6
+  */
 void AltitudeHold(void)//舍弃
 {
     Real_Distance = GetAverageDistance();
@@ -110,6 +164,15 @@ void AltitudeHold(void)//舍弃
     else if(Goal_Distance>Real_Distance)
         Error_Distance = Goal_Distance-Real_Distance;
 }
+/**
+  * 函 数 名:OledDisplayInit
+  * 函数功能: OLED显示初始化函数
+  * 输入参数:
+  * 返 回 值: 无
+  * 说    明: 无
+  *   By Sw Young
+  *   2017.7.6
+  */
 void OledDisplayInit(void)
 {
     OLED_Clear();
@@ -120,6 +183,15 @@ void OledDisplayInit(void)
     OLED_ShowNum(50,6,Goal_Distance,4,16);
     OLED_ShowString(80,88,"MM",16);
 }
+/**
+  * 函 数 名:Display
+  * 函数功能: OLED显示函数
+  * 输入参数:
+  * 返 回 值: 无
+  * 说    明: 无
+  *   By Sw Young
+  *   2017.7.6
+  */
 void Display(void)
 {
     OLED_ShowString(6,3,"AxesState:",16);
@@ -131,6 +203,15 @@ void Display(void)
     OLED_ShowNum(56,6,Goal_Distance,4,16);
     OLED_ShowString(88,6,"MM",16);
 }
+/**
+  * 函 数 名:AttitudeProtection
+  * 函数功能: 姿态保护函数
+  * 输入参数:
+  * 返 回 值: 无
+  * 说    明: 无
+  *   By Sw Young
+  *   2017.7.6
+  */
 void AttitudeProtection(void)
 {
     err_roll=fabs(RealAttitude_roll);

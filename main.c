@@ -108,8 +108,8 @@ void HardwareConfig(void)
 }
 
 extern uint16_t Real_XCoordinate,Real_YCoordinate;//申明坐标
-extern uint16_t Goal_Distance,\
-                Real_Distance;
+extern uint16_t Goal_Distance;
+extern float    Real_Distance;
 extern int16_t  RealAttitude_roll,\
                 RealAttitude_pitch,\
                 RealAttitude_yaw;//申明参数
@@ -129,7 +129,7 @@ extern bool start_PID_H;
   *   2017.7.6
   */
 int main(void)
-{
+    {
     bool Control_Open_Flag = true;//系统控制标志位，通过按键打开，一次有效
     bool Coordinate_Open_Flag = true;//X、Y方向pid调节标志，一次有效
 
@@ -160,7 +160,7 @@ int main(void)
         }
         calculate_test();
         Display();
-        UARTprintf("RealDistance: %d\n",Real_Distance);
+        UARTprintf("RealDistance: %d\n",(int)Real_Distance);
         UARTprintf("GoalDistance: %d\n",Goal_Distance);
         UARTprintf("x=%d,y=%d\n",Real_XCoordinate,Real_YCoordinate);
         UARTprintf("Roll: %d;pitch: %d;yaw:%d\n",RealAttitude_roll,RealAttitude_pitch,RealAttitude_yaw);

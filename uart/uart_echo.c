@@ -512,10 +512,12 @@ UART3IntHandler(void)
     UART3Send("Rec: ",4);
     UART3Send(ReciveData_UART3, ReciveData_i_UART3);
 //参数获取
-    if(ReciveData_UART3[0]=='X'&&ReciveData_UART3[7]=='Y')
+    if(ReciveData_UART3[0]=='X'&&ReciveData_UART3[3]=='Y')
     {
-        Real_XCoordinate = (ReciveData_UART3[1]-48)*100+(ReciveData_UART3[2]-48)*10+(ReciveData_UART3[3]-48);
-        Real_YCoordinate = (ReciveData_UART3[4]-48)*100+(ReciveData_UART3[5]-48)*10+(ReciveData_UART3[6]-48);
+//        Real_XCoordinate = (ReciveData_UART3[1]-48)*100+(ReciveData_UART3[2]-48)*10+(ReciveData_UART3[3]-48);
+//        Real_YCoordinate = (ReciveData_UART3[4]-48)*100+(ReciveData_UART3[5]-48)*10+(ReciveData_UART3[6]-48);
+        Real_XCoordinate = ReciveData_UART3[1];
+        Real_YCoordinate = ReciveData_UART3[2];
     }
 }
 

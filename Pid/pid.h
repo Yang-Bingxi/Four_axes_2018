@@ -20,15 +20,15 @@
 #define CAMERA_MID_X    80
 #define CAMERA_MID_Y    60
 
-#define DEFAULT_KP_X        0.15f
+#define DEFAULT_KP_X        2.5f
 #define DEFAULT_KI_X        0.00f
 #define DEFAULT_KD_X        0.35f
 
-#define DEFAULT_KP_Y        0.120f
+#define DEFAULT_KP_Y        2.0f
 #define DEFAULT_KI_Y        0.00f
 #define DEFAULT_KD_Y        0.30f
 
-#define DEFAULT_KP_H        0.1f
+#define DEFAULT_KP_H        0.3f
 #define DEFAULT_KI_H        0.0f
 #define DEFAULT_KD_H        0.0f
 
@@ -79,8 +79,8 @@ extern bool start_PID_H;
 extern void PID_Init(void);
 extern void Position_PID(void);
 //extern void CMT2_IntHandler(void);
-extern uint16_t Real_Distance ;
-extern uint16_t Goal_Distance;//默认定高值800mm
+extern float     Real_Distance ;
+extern uint16_t     Goal_Distance;//默认定高值800mm
 
 
 #endif /* PID_PID_H_ */
