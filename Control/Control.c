@@ -29,10 +29,13 @@
  * 参数初始化
  */
 //高度:单位 MM
-uint16_t Goal_Distance = 500;//默认定高值800mm
+uint16_t Goal_Distance = 700;//默认定高值800mm
 float volatile Real_Distance = 0,Last_Real_Distance = 0;
 extern int int_distance;
 uint16_t Error_Distance = 0;
+
+extern int16_t int_pitch ,int_roll ,int_yaw;
+
 
 int16_t RealAttitude_roll;
 int16_t RealAttitude_pitch;
@@ -147,25 +150,40 @@ void Get_Coordinate(void)
 void Get_Distance(void)
 {
     Real_Distance = int_distance*10;//转换成mm
-    if(fabs(Real_Distance-Last_Real_Distance)>300)
+    if(fabs(Real_Distance-Last_Real_Distance)>500)
         Real_Distance = Last_Real_Distance;
     Last_Real_Distance = Real_Distance;
+}
+/**
+  * 函 数 名:Get_Attitude
+  * 函数功能: 获取姿态
+  * 输入参数:
+  * 返 回 值: 无
+  * 说    明:
+  *   By Sw Young
+  *   2017.7.6
+  */
+void Get_Attitude(void)
+{
+    RealAttitude_pitch = int_pitch;
+    RealAttitude_roll = int_roll;
+    RealAttitude_yaw = int_yaw;
 }
 /**
   * 函 数 名:AltitudeHold
   * 函数功能: 自稳模式飞行
   * 输入参数:
   * 返 回 值: 无
-  * 说    明: 舍弃（飞行模式控制移至pid）
+  * 说    明:
   *   By Sw Young
   *   2017.7.6
   */
-void AltitudeHold(void)//舍弃
+void AltitudeHold(void)
 {
     //低于目标高度
     if(Goal_Distance-(int)Real_Distance > 100&&Goal_Distance-(int)Real_Distance <300)
     {
-       PwmControl_3(1635);
+       PwmControl_3(1645);
     }
     else if(Goal_Distance-(int)Real_Distance > 300&&Goal_Distance-(int)Real_Distance <500)
     {
@@ -178,11 +196,11 @@ void AltitudeHold(void)//舍弃
     //高于目标高度
     else if((int)Real_Distance - Goal_Distance > 100&&(int)Real_Distance - Goal_Distance < 300)
     {
-       PwmControl_3(1420);
+       PwmControl_3(1435);
     }
     else if((int)Real_Distance - Goal_Distance > 300&&(int)Real_Distance - Goal_Distance < 500)
     {
-       PwmControl_3(1390);
+       PwmControl_3(1380);
     }
     else if((int)Real_Distance - Goal_Distance > 500)
     {

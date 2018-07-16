@@ -29,6 +29,8 @@ extern float volatile  Real_Distance,Last_Real_Distance;
 extern int int_distance;
 extern uint16_t  Goal_Distance;//默认定高值800mm
 
+bool Coordinate_Open_Flag = true;//X、Y方向pid调节标志，一次有效
+
 PID_K PID_X;
 PID_K PID_Y;
 PID_K PID_H;
@@ -210,21 +212,24 @@ void Timer1IntHandler(void)
    //        else
    //            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
 
-       //calculate_test();//获取高度
+       Get_Attitude();
        Get_Distance();//获取高度
-       AttitudeProtection();
-//       if(calculate_Flag)
-//           UARTprintf("RealDistance:%d\n",Real_Distance);
        UARTprintf("RealDistance:%d\n",(int)Real_Distance);
        Get_Coordinate();//获取坐标值
        UARTprintf("get_x:%d get_y:%d\n",get_x,get_y);
-       err_x = (int)(Real_Distance/1000 * ((int)get_x - CAMERA_MID_X));
-       err_y = (int)(Real_Distance/1000 * ((int)get_y - CAMERA_MID_Y));
+       err_x = (int)(Real_Distance/1000.0 * ((int)get_x - CAMERA_MID_X));
+       err_y = (int)(Real_Distance/1000.0 * ((int)get_y - CAMERA_MID_Y));
        UARTprintf("Err_x:%d Err_y:%d\n",err_x,err_y);
 
        PID_Data_X.Error = err_x;
        PID_Data_Y.Error = err_y;
        Position_PID();
+       if(Real_Distance>300&&Control_Open&&Coordinate_Open_Flag)
+       {
+           Coordinate_Open_Flag = false;
+           start_PID_X = true;
+           start_PID_Y = true;
+       }
        if(start_PID_X)
            PwmControl_1((int)(channel_val_MID+(int)PID_Data_X.PID_OUT));
        if(start_PID_Y)

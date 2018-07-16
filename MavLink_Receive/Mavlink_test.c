@@ -28,10 +28,6 @@
 #include "driverlib/uart.h"
 
 bool calculate_Flag = false;
-extern float    Real_Distance;
-extern int16_t  RealAttitude_roll;
-extern int16_t  RealAttitude_pitch;
-extern int16_t  RealAttitude_yaw;
 uint8_t rx_buffer;  //缓存Mavlink接收串口的数据
 bool newAttiFlag = false;  //姿态更新标志
 bool newHeightFlag = false;//高度更新标志
@@ -42,7 +38,7 @@ uint8_t static start_receive_attitude = 0;
 uint8_t static Rx_Buffer_height[20]= {0};
 uint8_t static start_receive_height =0;
 
-int16_t static int_pitch ,int_roll ,int_yaw;
+int16_t int_pitch ,int_roll ,int_yaw;
 int int_distance;
 float static pitch ,roll , yaw ,distan;
 
@@ -213,14 +209,11 @@ void calculate_test(void)
 	  }
 
 	 int_pitch =(int)(pitch);
-	 RealAttitude_pitch = int_pitch;
-	 UARTprintf("\n int_pitch= %d", int_pitch);
+	 //UARTprintf("\n int_pitch= %d", int_pitch);
 	 int_roll = (int)(roll);
-	 RealAttitude_roll = int_roll;
-	 UARTprintf("\n int_roll= %d", int_roll);
+	 //UARTprintf("\n int_roll= %d", int_roll);
 	 int_yaw = (int)(yaw);
-	 RealAttitude_yaw = int_yaw;
-	 UARTprintf("\n int_yaw= %d",int_yaw);
+	 //UARTprintf("\n int_yaw= %d",int_yaw);
      }
 
     if(newHeightFlag)

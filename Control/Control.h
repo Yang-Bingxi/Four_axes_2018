@@ -15,6 +15,8 @@ void Get_Distance(void);
 void OledDisplayInit(void);
 void Display(void);
 void AttitudeProtection(void);
+void AltitudeHold(void);
+void Get_Attitude(void);
 
 
 #define channel_val_MIN 1100

@@ -145,7 +145,7 @@ void Timer2_Config(void)
        //
         TimerConfigure(TIMER2_BASE, TIMER_CFG_PERIODIC);
 
-        TimerLoadSet(TIMER2_BASE, TIMER_A,  800000); //Fre = 主频/800000 = 100HZ
+        TimerLoadSet(TIMER2_BASE, TIMER_A,  400000); //Fre = 主频/400000 = 0HZ
 
        //
        // Setup the interrupts for the timer timeouts.
@@ -167,9 +167,9 @@ void Timer2IntHandler(void)
 
     calculate_test();//读取MavLink参数
 
-    i=~i;
-    if(i)
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, GPIO_PIN_1);
-    else
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
+//    i=~i;
+//    if(i)
+//        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, GPIO_PIN_1);
+//    else
+//        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
 }

@@ -133,7 +133,6 @@ extern bool start_PID_H;
 int main(void)
     {
     bool Control_Open_Flag = true;//系统控制标志位，通过按键打开，一次有效
-    bool Coordinate_Open_Flag = true;//X、Y方向pid调节标志，一次有效
 
     FPUEnable();        //开启浮点运算
     FPULazyStackingEnable();
@@ -145,8 +144,6 @@ int main(void)
     OledDisplayInit();  //初始化OLED显示界面
     while(1)
     {
-       //UARTprintf("Hello");//调试用
-       // Re al_Distance = GetAverageDistance();//获取高度在定时器中
         if(Control_Open&&Control_Open_Flag)
         {
             Control_Open_Flag = false;
@@ -154,14 +151,9 @@ int main(void)
             start_PID_H = true;
             LED_Set(GREEN);
         }
-//        if(Real_Distance>300&&Control_Open&&Coordinate_Open_Flag)
-//        {
-//            Coordinate_Open_Flag = false;
-//            start_PID_X = true;
-//            start_PID_Y = true;
-//        }
-        calculate_test();
-        Display();
+        Get_Distance();//获取高度
+        Get_Attitude();//获取姿态
+        Display();//显示函数
         UARTprintf("RealDistance: %d\n",(int)Real_Distance);
         UARTprintf("GoalDistance: %d\n",Goal_Distance);
         UARTprintf("x=%d,y=%d\n",Real_XCoordinate,Real_YCoordinate);
