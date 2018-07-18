@@ -186,6 +186,7 @@ UART2IntHandler(void)
         // Turn off the LED
         //
         //GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0);
+    		calculate_test();//¶ÁÈ¡MavLink²ÎÊý
     }
 
 }

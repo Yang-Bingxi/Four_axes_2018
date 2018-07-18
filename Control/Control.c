@@ -32,6 +32,7 @@
 uint16_t Goal_Distance = 700;//默认定高值800mm
 float volatile Real_Distance = 0,Last_Real_Distance = 0;
 extern int int_distance;
+extern int Distance_Laser;
 uint16_t Error_Distance = 0;
 
 extern int16_t int_pitch ,int_roll ,int_yaw;
@@ -149,7 +150,9 @@ void Get_Coordinate(void)
   */
 void Get_Distance(void)
 {
-    Real_Distance = int_distance*10;//转换成mm
+    //Real_Distance = int_distance*10;//转换成mm
+    //Real_Distance = GetAverageDistance();
+    Real_Distance = Distance_Laser*10;
     if(fabs(Real_Distance-Last_Real_Distance)>500)
         Real_Distance = Last_Real_Distance;
     Last_Real_Distance = Real_Distance;

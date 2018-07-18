@@ -74,6 +74,7 @@
 uint8_t ReciveData_UART0[16];
 uint8_t ReciveData_i_UART0 = 0;
 extern bool Control_Serial;
+int Distance_Laser;
 
 //*****************************************************************************
 //
@@ -109,20 +110,15 @@ UARTIntHandler(void)
 
         ReciveData_UART0[ReciveData_i_UART0] = UARTCharGetNonBlocking(UART0_BASE);
         ReciveData_i_UART0++;
-        //
-        // Blink the LED to show a character transfer is occuring.
-        //
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, GPIO_PIN_2);
+        //   UARTSend()
+           UART0Send("Rec: ",4);
+           UART0Send(ReciveData_UART0, ReciveData_i_UART0);
+       //参数获取
+           if(ReciveData_UART0[0]==0x5A&&ReciveData_UART0[1]==0x5A)
+           {
+               Distance_Laser = (ReciveData_UART0[4]<<8)|ReciveData_UART0[5];
 
-        //
-        // Delay for 1 millisecond.  Each SysCtlDelay is about 3 clocks.
-        //
-        SysCtlDelay(SysCtlClockGet() / (1000 * 3));
-
-        //
-        // Turn off the LED
-        //
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0);
+           }
 
     }
 
@@ -222,15 +218,20 @@ void Uart0Iint(void)
        //
        // Use the internal 16MHz oscillator as the UART clock source.
        //
-       UARTClockSourceSet(UART0_BASE, UART_CLOCK_PIOSC);
+       //UARTClockSourceSet(UART0_BASE, UART_CLOCK_PIOSC);
 
        //
        // Initialize the UART for console I/O.
        //
        UARTStdioConfig(1, 115200, 16000000);
+        UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 9600,
+                                (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
+                                 UART_CONFIG_PAR_NONE));
+         IntEnable(INT_UART0);
+         UARTIntEnable(UART0_BASE, UART_INT_RX | UART_INT_RT);
 
-       UARTprintf("UART0 Is Ok!\n");
-
+        //UARTprintf("UART0 Is Ok!\n");
+       UART0Send((uint8_t *)"\n UART0 Is OK!!\n\n ", 17);
 
 }
 
@@ -302,87 +303,6 @@ UART1IntHandler(void)
             UARTprintf("Land\n");
 
         }
-//    if(ReciveData_UART1[0]=='F')
-//    {
-//        Counter = 0; //计数清零
-//        TimerEnable(TIMER0_BASE, TIMER_A);
-//        FlagSend = 1;
-//        MotorOrderDirection = 0;//前：0  后：1  左：2  右： 3
-//
-//        Beep_Flag = 1;
-//        Beep_Counter = 0;
-//        Beep_Fre = 50;
-//
-//    }
-//    else if (ReciveData_UART1[0]=='B')
-//    {
-//        Counter = 0; //计数清零
-//        TimerEnable(TIMER0_BASE, TIMER_A);
-//        FlagSend = 1;
-//        MotorOrderDirection = 1;//前：0  后：1  左：2  右： 3
-//
-//        Beep_Flag = 1;
-//        Beep_Counter = 0;
-//        Beep_Fre = 33;
-//
-//    }
-//    else if (ReciveData_UART1[0]=='L')
-//    {
-//        Counter = 0; //计数清零
-//        TimerEnable(TIMER0_BASE, TIMER_A);
-//        FlagSend =1;
-//        MotorOrderDirection = 2;//前：0  后：1  左：2  右： 3
-//
-//        Beep_Flag = 1;
-//        Beep_Counter = 0;
-//        Beep_Fre = 20;
-//
-//    }
-//    else if (ReciveData_UART1[0]=='R')
-//    {
-//        Counter = 0; //计数清零
-//        TimerEnable(TIMER0_BASE, TIMER_A);
-//        FlagSend = 1;
-//        MotorOrderDirection = 3;//前：0  后：1  左：2  右： 3
-//
-//        Beep_Flag = 1;
-//        Beep_Counter = 0;
-//        Beep_Fre = 40;
-//
-//    }
-//    else if (ReciveData_UART1[0]=='S'&&ReciveData_UART1[1]=='T'&&ReciveData_UART1[2]=='O'&&ReciveData_UART1[3]=='P')
-//    {
-//        Flag_Stop = 1;
-//        FlagSend = 0;
-//    }
-//    else if (ReciveData_UART1[0]=='S'&&ReciveData_UART1[1]=='T'&&ReciveData_UART1[2]=='A'&&ReciveData_UART1[3]=='R')
-//    {
-//        Flag_Stop = 0;
-//        FlagSend = 1;
-//    }
-////参数校准
-//    else if (ReciveData_UART1[0]=='A'&&ReciveData_UART1[1]=='1')
-//    {
-//        parameter_Ang=parameter_Ang + 0.05;
-//        UARTprintf("parameter_Ang=%d",(int)(parameter_Ang*10));
-//    }
-//    else if (ReciveData_UART1[0]=='P'&&ReciveData_UART1[1]=='1')
-//    {
-//        parameter_Ang=parameter_Ang - 0.05;
-//        UARTprintf("parameter_Ang=%d",(int)(parameter_Ang*10));
-//    }
-//    else if (ReciveData_UART1[0]=='A'&&ReciveData_UART1[1]=='2')
-//    {
-//        parameter_Dis=parameter_Dis + 0.5;
-//        UARTprintf("parameter_Dis%d",(int)(parameter_Dis));
-//    }
-//    else if (ReciveData_UART1[0]=='P'&&ReciveData_UART1[1]=='2')
-//    {
-//        parameter_Dis=parameter_Dis - 0.5;
-//        UARTprintf("parameter_Dis%d",(int)(parameter_Dis));
-//    }
-//    if(ReciveData_UART1[0]=='F'||ReciveData_UART1[0]=='B'||ReciveData_UART1[0]=='R'||ReciveData_UART1[0]=='L')
-//        MotorOrderDisplacement = (ReciveData_UART1[1]-48)*100+(ReciveData_UART1[2]-48)*10+(ReciveData_UART1[3]-48);
 }
 
 
@@ -491,21 +411,6 @@ UART3IntHandler(void)
 
         ReciveData_UART3[ReciveData_i_UART3] = UARTCharGetNonBlocking(UART3_BASE);
         ReciveData_i_UART3++;
-        //
-        // Blink the LED to show a character transfer is occuring.
-        //
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, GPIO_PIN_1);
-
-        //
-        // Delay for 1 millisecond.  Each SysCtlDelay is about 3 clocks.
-        //
-        SysCtlDelay(SysCtlClockGet() / (1000 * 3));
-
-        //
-        // Turn off the LED
-        //
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
-
     }
 
  //   UARTSend()

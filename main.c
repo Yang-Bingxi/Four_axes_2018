@@ -91,9 +91,9 @@ void HardwareConfig(void)
 /*
  * 更换
  */
-//    Sonar_Configure();      //超声波初始化
-//    Sonar_GPIOA_Configure();
-//    Sonar_GPIOA_Interrupt();
+    Sonar_Configure();      //超声波初始化
+    Sonar_GPIOA_Configure();
+    Sonar_GPIOA_Interrupt();
 
     //Timer0_Config();    //定时器初始化
     Timer1_Config();
@@ -131,7 +131,8 @@ extern bool start_PID_H;
   *   2017.7.6
   */
 int main(void)
-    {
+
+{
     bool Control_Open_Flag = true;//系统控制标志位，通过按键打开，一次有效
 
     FPUEnable();        //开启浮点运算
@@ -151,8 +152,8 @@ int main(void)
             start_PID_H = true;
             LED_Set(GREEN);
         }
-        Get_Distance();//获取高度
-        Get_Attitude();//获取姿态
+//        Get_Distance();//获取高度
+//        Get_Attitude();//获取姿态
         Display();//显示函数
         UARTprintf("RealDistance: %d\n",(int)Real_Distance);
         UARTprintf("GoalDistance: %d\n",Goal_Distance);

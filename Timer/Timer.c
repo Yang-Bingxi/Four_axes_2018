@@ -16,7 +16,7 @@
 **/
 #include "timer.h"
 #include "MavLink_Receive/mavlink_recieve.h"
-
+#include "Control/Control.h"
 char Time_Flag = 0;
 uint32_t Counter = 0;
 uint8_t Beep_Flag = 0;
@@ -34,34 +34,31 @@ uint32_t Beep_Fre = 40;
   */
 void Timer0_Config(void)
 {
-       //
-       // Enable the peripherals used by this example.
-       //
-        SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
-       //
-       // Enable processor interrupts.
-       //
-       //不分频
-       //设置为向上计数模式
-        TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC_UP);
-       //
-       //把计数值装满
-       TimerLoadSet(TIMER0_BASE, TIMER_A,0xFFFFFFFF);//2
-       //
-       //***************************中断使能*******************************************
-       //默认不中断
-       //使能TIME0B在基数结束时中断
-       //TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
-       //使能TIMER0B中断
-       //IntEnable(INT_TIMER0A);
-       IntDisable(INT_TIMER0A);//2
-       //动态注册
-       //TimerIntRegister(ui32Base, ui32Timer, pfnHandler)
-       //使能TIMER0B,开始计数
-       //TimerEnable(TIMER0_BASE, TIMER_B);
-       TimerEnable(TIMER0_BASE, TIMER_A);//2
-       //使能处理器中断
-       IntMasterEnable();
+    //
+    // The Timer0 peripheral must be enabled for use.
+    //
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
+
+    //
+    // Configure Timer0A and Timer0B connect as a 32-bit periodic timer.
+    //
+    TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC_UP);
+
+    //
+    // Set the load value to max value.
+    //
+    TimerLoadSet(TIMER0_BASE, TIMER_A, 0xFFFFFFFF);
+
+    // Disable the timer0 interrupt.
+    IntDisable(INT_TIMER0A);
+
+    // Enable the timer.
+    TimerEnable(TIMER0_BASE, TIMER_A);
+
+    //
+    // Enable processor interrupts.
+    //
+    IntMasterEnable();
 }
 /**
   * 函 数 名:Timer0IntHandler.c
@@ -78,15 +75,6 @@ void Timer0IntHandler(void)
     uint32_t ui32IntStatus;
     ui32IntStatus = TimerIntStatus(TIMER0_BASE, true);
     TimerIntClear(TIMER0_BASE, ui32IntStatus);//清除中断标志位
-    if((GPIOPinRead(GPIO_PORTF_BASE,GPIO_PIN_0) & GPIO_PIN_0)  != GPIO_PIN_0)
-    {
-    KeyPress0=(1+KeyPress0)%2;
-    }
-
-    if(k)
-        {k=0;GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2, GPIO_PIN_2);}
-    else
-        {k=1;GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2, 0);}
 }
 void Timer1_Config(void)
 {
@@ -145,7 +133,7 @@ void Timer2_Config(void)
        //
         TimerConfigure(TIMER2_BASE, TIMER_CFG_PERIODIC);
 
-        TimerLoadSet(TIMER2_BASE, TIMER_A,  400000); //Fre = 主频/400000 = 0HZ
+        TimerLoadSet(TIMER2_BASE, TIMER_A,  1000000); //Fre = 主频/1000000 = 80HZ
 
        //
        // Setup the interrupts for the timer timeouts.
@@ -165,7 +153,8 @@ void Timer2IntHandler(void)
     ui32IntStatus = TimerIntStatus(TIMER2_BASE, true);
     TimerIntClear(TIMER2_BASE, ui32IntStatus);//清除中断标志位
 
-    calculate_test();//读取MavLink参数
+    Get_Distance();//获取高度
+    Get_Attitude();//获取姿态
 
 //    i=~i;
 //    if(i)

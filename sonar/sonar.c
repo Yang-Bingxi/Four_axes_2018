@@ -77,10 +77,9 @@ void Int_Handler_GPIOA(void)
 double GetAverageDistance()
 {
     int i = 0;
-    double dis[11] = {0, 0, 0, 0, 0,
-                      0, 0, 0, 0, 0, 0};
+    double dis[11] = {0, 0, 0, 0, 0};
     double AverageDistance = 0;
-    for( i=0 ; i<=10 ; i++)
+    for( i=0 ; i<=4 ; i++)
     {
         SonarTrig();
         if(DataIsReady == true)
@@ -88,7 +87,7 @@ double GetAverageDistance()
         dis[i] = fPeriod * 0.002125;
         }
      }
-    AverageDistance = LimitingFilter(dis,11);
+    AverageDistance = LimitingFilter(dis,5);
     return AverageDistance;
 }
 
