@@ -133,7 +133,7 @@ void Timer2_Config(void)
        //
         TimerConfigure(TIMER2_BASE, TIMER_CFG_PERIODIC);
 
-        TimerLoadSet(TIMER2_BASE, TIMER_A,  1000000); //Fre = Ö÷Æµ/1000000 = 80HZ
+        TimerLoadSet(TIMER2_BASE, TIMER_A,  800000); //Fre = Ö÷Æµ/800000 = 100HZ
 
        //
        // Setup the interrupts for the timer timeouts.

@@ -234,7 +234,8 @@ void Timer1IntHandler(void)
            PwmControl_1((int)(channel_val_MID+(int)PID_Data_X.PID_OUT));
        if(start_PID_Y)
            PwmControl_2((int)(channel_val_MID+(int)PID_Data_Y.PID_OUT));
-       UARTprintf("roll:%d\n pitch:%d\n",channel_val_MID+(int)PID_Data_X.PID_OUT,channel_val_MID+(int)PID_Data_Y.PID_OUT);
+       if(start_PID_X)
+           UARTprintf("roll:%d\n pitch:%d\n",channel_val_MID+(int)PID_Data_X.PID_OUT,channel_val_MID+(int)PID_Data_Y.PID_OUT);
        if(start_PID_H)//高度调节
        {
            AltitudeHold();
