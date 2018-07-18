@@ -186,15 +186,15 @@ void AltitudeHold(void)
     //低于目标高度
     if(Goal_Distance-(int)Real_Distance > 100&&Goal_Distance-(int)Real_Distance <300)
     {
-       PwmControl_3(1645);
+       PwmControl_3(1655);
     }
     else if(Goal_Distance-(int)Real_Distance > 300&&Goal_Distance-(int)Real_Distance <500)
     {
-       PwmControl_3(1660);
+       PwmControl_3(1670);
     }
     else if(Goal_Distance-(int)Real_Distance > 500)
     {
-       PwmControl_3(1690);
+       PwmControl_3(1700);
     }
     //高于目标高度
     else if((int)Real_Distance - Goal_Distance > 100&&(int)Real_Distance - Goal_Distance < 300)

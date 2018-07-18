@@ -117,7 +117,6 @@ UARTIntHandler(void)
            if(ReciveData_UART0[0]==0x5A&&ReciveData_UART0[1]==0x5A)
            {
                Distance_Laser = (ReciveData_UART0[4]<<8)|ReciveData_UART0[5];
-
            }
 
     }
