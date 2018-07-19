@@ -153,8 +153,8 @@ void Timer2IntHandler(void)
     ui32IntStatus = TimerIntStatus(TIMER2_BASE, true);
     TimerIntClear(TIMER2_BASE, ui32IntStatus);//清除中断标志位
 
-    Get_Distance();//获取高度
-    Get_Attitude();//获取姿态
+//    Get_Distance();//获取高度
+//    Get_Attitude();//获取姿态
 
 //    i=~i;
 //    if(i)

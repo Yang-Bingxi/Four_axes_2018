@@ -152,14 +152,17 @@ int main(void)
             start_PID_H = true;
             LED_Set(GREEN);
         }
-//        Get_Distance();//获取高度
-//        Get_Attitude();//获取姿态
+        Get_Distance();//获取高度
+        Get_Attitude();//获取姿态
         Display();//显示函数
-        UARTprintf("RealDistance: %d\n",(int)Real_Distance);
-        UARTprintf("GoalDistance: %d\n",Goal_Distance);
-        UARTprintf("x=%d,y=%d\n",Real_XCoordinate,Real_YCoordinate);
-        UARTprintf("Roll: %d;pitch: %d;yaw:%d\n",RealAttitude_roll,RealAttitude_pitch,RealAttitude_yaw);
-        UARTprintf("err_roll:%d;err_pitch%d;\n",err_roll=fabs(RealAttitude_roll),err_pitch=fabs(RealAttitude_pitch));
+        if(Control_Open_Flag)
+        {
+            UARTprintf("RealDistance: %d\n",(int)Real_Distance);
+            UARTprintf("GoalDistance: %d\n",Goal_Distance);
+            UARTprintf("x=%d,y=%d\n",Real_XCoordinate,Real_YCoordinate);
+            UARTprintf("Roll: %d;pitch: %d;yaw:%d\n",RealAttitude_roll,RealAttitude_pitch,RealAttitude_yaw);
+            UARTprintf("err_roll:%d;err_pitch%d;\n",err_roll=fabs(RealAttitude_roll),err_pitch=fabs(RealAttitude_pitch));
+        }
         Delay_ms(500);
     }
 }

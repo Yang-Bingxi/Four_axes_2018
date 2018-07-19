@@ -412,9 +412,9 @@ UART3IntHandler(void)
         ReciveData_i_UART3++;
     }
 
- //   UARTSend()
-    UART3Send("Rec: ",4);
-    UART3Send(ReciveData_UART3, ReciveData_i_UART3);
+// //   UARTSend()
+//    UART3Send("Rec: ",4);
+//    UART3Send(ReciveData_UART3, ReciveData_i_UART3);
 //参数获取
     if(ReciveData_UART3[0]=='X'&&ReciveData_UART3[3]=='Y')
     {

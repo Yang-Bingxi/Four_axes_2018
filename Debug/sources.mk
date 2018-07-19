@@ -120,6 +120,7 @@ MavLink_Receive \
 Pid \
 Pwm \
 Timer \
+VisualScopeOutput \
 colorful_LED \
 delay \
 key \

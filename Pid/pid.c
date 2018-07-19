@@ -20,6 +20,7 @@
 #include "Control/Control.h"
 #include "Pwm/pwm.h"
 #include "MavLink_Receive/mavlink_recieve.h"
+#include "VisualScopeOutput/VisualScopeOutput.h"
 
 extern uint8_t Control_Open;
 extern bool calculate_Flag;
@@ -44,7 +45,7 @@ bool start_PID_H = false;
 
 int err_x = 0;
 int err_y = 0;
-uint16_t err_h = 0;
+int err_h = 0;
 
 uint16_t get_x = CAMERA_MID_X, get_y = CAMERA_MID_Y;
 
@@ -214,12 +215,14 @@ void Timer1IntHandler(void)
 
        Get_Attitude();
        Get_Distance();//获取高度
-       UARTprintf("RealDistance:%d\n",(int)Real_Distance);
+       //UARTprintf("RealDistance:%d\n",(int)Real_Distance);
        Get_Coordinate();//获取坐标值
-       UARTprintf("get_x:%d get_y:%d\n",get_x,get_y);
+       //UARTprintf("get_x:%d get_y:%d\n",get_x,get_y);
        err_x = (int)(Real_Distance/1000.0 * ((int)get_x - CAMERA_MID_X));
        err_y = (int)(Real_Distance/1000.0 * ((int)get_y - CAMERA_MID_Y));
-       UARTprintf("Err_x:%d Err_y:%d\n",err_x,err_y);
+       err_h = (int)Real_Distance - Goal_Distance;
+//       OutPut_Data();
+       UARTprintf("%d\t%d\t%d\n",err_x,err_y,err_h);
 
        PID_Data_X.Error = err_x;
        PID_Data_Y.Error = err_y;
@@ -234,8 +237,8 @@ void Timer1IntHandler(void)
            PwmControl_1((int)(channel_val_MID+(int)PID_Data_X.PID_OUT));
        if(start_PID_Y)
            PwmControl_2((int)(channel_val_MID+(int)PID_Data_Y.PID_OUT));
-       if(start_PID_X)
-           UARTprintf("roll:%d\n pitch:%d\n",channel_val_MID+(int)PID_Data_X.PID_OUT,channel_val_MID+(int)PID_Data_Y.PID_OUT);
+//       if(start_PID_X)
+//           UARTprintf("roll:%d\n pitch:%d\n",channel_val_MID+(int)PID_Data_X.PID_OUT,channel_val_MID+(int)PID_Data_Y.PID_OUT);
        if(start_PID_H)//高度调节
        {
            AltitudeHold();
